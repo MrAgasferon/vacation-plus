@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.apk
+*.aab
+*.log
+.DS_Store
+Thumbs.db
+android/local.properties
+android/.gradle/
+android/**/build/
+coverage/
+backups/
+
+# Private working plan and generated Android preview
+/PLAN.md
+/android/
