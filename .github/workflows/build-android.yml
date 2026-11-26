@@ -7,6 +7,7 @@ on:
       - 'www/**'
       - 'tests/**'
       - 'scripts/prepare-android.py'
+      - 'android-src/**'
       - 'package.json'
       - 'package-lock.json'
       - 'capacitor.config.json'
@@ -36,12 +37,11 @@ jobs:
           packages: 'platforms;android-35 build-tools;35.0.0'
       - name: Install pinned Capacitor dependencies
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
-          else
-            npm install --no-audit --no-fund
+          if [ ! -f package-lock.json ] || ! node -e 'const a=require("./package.json"), b=require("./package-lock.json").packages?.[""]; if(!b || Object.entries({...a.dependencies,...a.devDependencies}).some(([k,v]) => (b.dependencies?.[k] ?? b.devDependencies?.[k]) !== v)) process.exit(1)'; then
+            npm install --package-lock-only --no-audit --no-fund
           fi
-          npm ls @capacitor/core @capacitor/android @capacitor/cli
+          npm ci --no-audit --no-fund
+          npm ls @capacitor/core @capacitor/android @capacitor/cli @capacitor/preferences @capacitor/app
       - name: Save npm lockfile for reproducible future builds
         uses: actions/upload-artifact@v4
         with:
@@ -49,10 +49,14 @@ jobs:
           path: package-lock.json
           if-no-files-found: error
           retention-days: 30
+      - name: Install Pillow for Android icons
+        run: |
+          python3 -m venv "$RUNNER_TEMP/vacation-assets"
+          "$RUNNER_TEMP/vacation-assets/bin/pip" install Pillow==11.3.0
       - name: Generate Android project from current web source
         run: |
           npm run android:add
-          python3 scripts/prepare-android.py "$GITHUB_RUN_NUMBER"
+          "$RUNNER_TEMP/vacation-assets/bin/python" scripts/prepare-android.py "$GITHUB_RUN_NUMBER"
           npm run android:sync
           cmp www/index.html android/app/src/main/assets/public/index.html
       - uses: gradle/actions/setup-gradle@v4
