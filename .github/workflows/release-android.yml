@@ -1,0 +1,135 @@
+name: Release Android APK
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version X.Y.Z (e.g. 0.3.0)'
+        required: true
+        type: string
+        default: '0.3.0'
+      publish:
+        description: 'Publish to GitHub Releases (otherwise signed artifact only)'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: vacation-plus-android-release
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Validate release version and existing tags
+        run: |
+          python3 scripts/prepare-release.py code "$RELEASE_VERSION"
+          git ls-remote --tags --refs origin | python3 scripts/check-release-tags.py "$RELEASE_VERSION"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run regression tests
+        run: npm test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;35.0.0'
+      - name: Install Capacitor dependencies
+        run: |
+          if [ ! -f package-lock.json ] || ! node -e 'const a=require("./package.json"), b=require("./package-lock.json").packages?.[""]; if(!b || Object.entries({...a.dependencies,...a.devDependencies}).some(([k,v]) => (b.dependencies?.[k] ?? b.devDependencies?.[k]) !== v)) process.exit(1)'; then
+            npm install --package-lock-only --no-audit --no-fund
+          fi
+          npm ci --no-audit --no-fund
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-release-npm-lock
+          path: package-lock.json
+          if-no-files-found: error
+      - name: Prepare Android production project
+        run: |
+          python3 -m venv "$RUNNER_TEMP/vacation-assets"
+          "$RUNNER_TEMP/vacation-assets/bin/pip" install Pillow==11.3.0
+          python3 scripts/prepare-release.py configure
+          npm run android:add
+          npm run android:sync
+          "$RUNNER_TEMP/vacation-assets/bin/python" scripts/prepare-release.py prepare "$RELEASE_VERSION"
+          git diff --exit-code -- www/
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Assemble unsigned release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleRelease
+      - name: Align and sign with permanent release key
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_CERT_SHA256: ${{ secrets.ANDROID_CERT_SHA256 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$ANDROID_KEYSTORE_BASE64" && test -n "$ANDROID_KEYSTORE_PASSWORD" && test -n "$ANDROID_CERT_SHA256" || { echo 'Missing Android signing secrets'; exit 1; }
+          keydir=$(mktemp -d "$RUNNER_TEMP/vacation-key.XXXXXX")
+          trap 'rm -rf "$keydir"' EXIT
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$keydir/release.p12"
+          unset ANDROID_KEYSTORE_BASE64
+          tools="$ANDROID_HOME/build-tools/35.0.0"
+          unsigned=android/app/build/outputs/apk/release/app-release-unsigned.apk
+          test -f "$unsigned"
+          mkdir -p output
+          "$tools/zipalign" -f -P 16 4 "$unsigned" "$keydir/aligned.apk"
+          "$tools/apksigner" sign --ks "$keydir/release.p12" --ks-type PKCS12 --ks-key-alias vacation-plus --ks-pass env:ANDROID_KEYSTORE_PASSWORD --key-pass env:ANDROID_KEYSTORE_PASSWORD --out "output/vacation-plus-$RELEASE_VERSION.apk" "$keydir/aligned.apk"
+          "$tools/apksigner" verify --verbose --print-certs "output/vacation-plus-$RELEASE_VERSION.apk" > "$keydir/cert.txt"
+          actual=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' "$keydir/cert.txt" | tr '[:upper:]' '[:lower:]')
+          expected=$(printf '%s' "$ANDROID_CERT_SHA256" | tr -d ':[:space:]' | tr '[:upper:]' '[:lower:]')
+          [[ "$expected" =~ ^[0-9a-f]{64}$ && "$actual" == "$expected" ]] || { echo 'Signing certificate fingerprint mismatch'; exit 1; }
+          printf 'SHA-256 signing certificate: %s\n' "$actual"
+          "$tools/zipalign" -c -P 16 4 "output/vacation-plus-$RELEASE_VERSION.apk"
+      - name: Verify release identity and offline content
+        run: |
+          APK="output/vacation-plus-$RELEASE_VERSION.apk"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump badging "$APK" > "$RUNNER_TEMP/vacation-badging.txt"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump resources "$APK" > "$RUNNER_TEMP/vacation-resources.txt"
+          python3 scripts/verify-release.py "$RELEASE_VERSION" "$APK" "$RUNNER_TEMP/vacation-badging.txt" "$RUNNER_TEMP/vacation-resources.txt"
+          (cd output && sha256sum "vacation-plus-$RELEASE_VERSION.apk" > SHA256SUMS.txt)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vacation-plus-signed-${{ inputs.version }}
+          path: output/
+          if-no-files-found: error
+          retention-days: 30
+  publish:
+    if: inputs.publish && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: vacation-plus-signed-${{ inputs.version }}
+          path: output
+      - name: Publish verified APK and checksum
+        run: |
+          set -euo pipefail
+          git ls-remote --tags --refs origin | python3 scripts/check-release-tags.py "$RELEASE_VERSION"
+          (cd output && sha256sum -c SHA256SUMS.txt)
+          TAG="v$RELEASE_VERSION"
+          # Upload while draft, make visible only when both assets are present.
+          gh release create "$TAG" "output/vacation-plus-$RELEASE_VERSION.apk" output/SHA256SUMS.txt --target "$GITHUB_SHA" --title "Отпуск × деньги $RELEASE_VERSION" --generate-notes --draft
+          gh release edit "$TAG" --draft=false --latest
