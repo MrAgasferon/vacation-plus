@@ -1,0 +1,91 @@
+name: Build Android APK (preview)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'www/**'
+      - 'tests/**'
+      - 'scripts/prepare-android.py'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'capacitor.config.json'
+      - '.github/workflows/build-android.yml'
+permissions:
+  contents: read
+concurrency:
+  group: android-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run regression tests
+        run: npm test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;35.0.0'
+      - name: Install pinned Capacitor dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+          npm ls @capacitor/core @capacitor/android @capacitor/cli
+      - name: Save npm lockfile for reproducible future builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-npm-lock
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Generate Android project from current web source
+        run: |
+          npm run android:add
+          python3 scripts/prepare-android.py "$GITHUB_RUN_NUMBER"
+          npm run android:sync
+          cmp www/index.html android/app/src/main/assets/public/index.html
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Assemble debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleDebug
+      - name: Verify signature and bundled offline assets
+        run: |
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          mkdir -p output
+          cp "$APK" output/vacation-plus-preview.apk
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import json
+          with ZipFile('output/vacation-plus-preview.apk') as apk:
+              for path in Path('www').rglob('*'):
+                  if path.is_file():
+                      name = 'assets/public/' + path.relative_to('www').as_posix()
+                      assert apk.read(name) == path.read_bytes(), f'Asset mismatch: {name}'
+              config = json.loads(apk.read('assets/capacitor.config.json'))
+              assert config['appId'] == 'io.github.mragasferon.vacationplus.preview'
+              assert not config.get('server', {}).get('url'), 'Remote URL must not be configured'
+          print('All bundled web assets verified; no remote app URL')
+          PY
+          (cd output && sha256sum vacation-plus-preview.apk > SHA256SUMS.txt)
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: vacation-plus-android-preview-${{ github.run_number }}
+          path: output/
+          if-no-files-found: error
+          retention-days: 30
