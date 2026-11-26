@@ -103,7 +103,8 @@ input,select{width:100%;border:1px solid #36445e;border-radius:12px;background:#
 
 /* Embedded mode: the content must not depend on the iframe height. */
 html.vacation-embedded body{min-height:0}
-</style></head><body>
+#native-warning{position:sticky;top:0;z-index:1000;margin:0;padding:12px 16px;background:#542b36;color:#ffe2e5;border-bottom:1px solid #a85b67;overflow-wrap:anywhere}#native-warning[hidden],#native-info[hidden],#native-storage-note[hidden]{display:none}
+</style></head><body><div id="native-warning" role="alert" hidden></div>
 <div class="container">
  <header class="head">
   <div><div class="eyebrow"><span class="spark"></span> Планировщик отпуска · Россия</div><h1>Отпуск <span style="color:#9db0ff">×</span> деньги</h1><p>Считай отпускные, сравнивай даты и планируй отпуск на целый год без сложной бухгалтерии.</p></div>
@@ -131,7 +132,7 @@ html.vacation-embedded body{min-height:0}
    <section class="panel"><h2>Параметры отпуска</h2><div class="field-row"><label for="leave-base">Основной отпуск, дней</label><input id="leave-base" type="number" min="0" max="365" step="1" value="28"></div><div class="field-row"><label for="leave-additional">Дополнительный отпуск, дней</label><input id="leave-additional" type="number" min="0" max="365" step="1" value="8"></div><p class="info-line">Дни двух видов учитываются отдельно. Если у периода выбран тип «Авто», сначала расходуются основные, затем дополнительные.</p><h2 style="margin-top:24px">Праздники внутри отпуска</h2><label class="switch-row"><input type="checkbox" id="holiday-auto-extend">По умолчанию вводить отпуск по количеству дней</label><p class="info-line">Для новых отпусков: по датам или по числу оплачиваемых дней (автоперенос праздников). Можно выбрать отдельно для каждого отпуска. Существующие периоды не меняются.</p><h2 style="margin-top:24px">Рабочий график</h2><div class="strategy-bar"><button class="strategy active" data-week="5" type="button">5/2 — пятидневка</button><button class="strategy" data-week="6" type="button">6/1 — шестидневка</button></div><p class="info-line">При смене графика пересчитываются рабочие дни, стоимость каждого рабочего дня, рекомендации и план.</p></section>
    <section class="panel"><h2>Управление годами</h2><p class="info-line">Основной — 2027. Скрытие года не удаляет введённые отпуска и сценарии. Календарь для 2026 и 2027 встроен в HTML.</p><div id="year-tiles" class="year-tiles"></div><label class="switch-row"><input type="checkbox" id="auto-check" checked>Проверять новые утверждённые годы раз в 7 дней</label><div class="row-between" style="margin-top:16px"><button class="btn btn-primary" id="check-updates" type="button">↻ Проверить обновления</button><span id="last-check" class="small muted">—</span></div><div class="year-add"><label for="load-year" class="small muted">Добавить прошлый / другой год</label><input type="number" id="load-year" min="2022" max="2035" step="1" value="2025"><button class="btn" id="load-year-btn" type="button">Загрузить</button></div><div id="update-status" class="feedback" role="status" aria-live="polite">Встроенные календари доступны без сети.</div><p class="info-line" style="margin-top:15px">Источник обновлений: <a href="https://calendar.kuzyak.in/" rel="noopener" target="_blank">Calendar API</a>. Добавляем год только при наличии реквизитов принятого постановления и корректного набора переносов. При ограничениях CORS автоматическая загрузка может быть недоступна даже на GitHub Pages; встроенные годы продолжат работать офлайн.</p></section>
    <section class="panel local-data-panel" aria-labelledby="local-data-title">
-    <h2 id="local-data-title">Локальные данные</h2>
+    <h2 id="local-data-title">Локальные данные</h2><p id="native-info" class="info-line" hidden></p><p id="native-storage-note" class="info-line" hidden>В APK данные сохраняются в нативном хранилище Android. Экспорт и импорт используют системное окно выбора файла.</p>
     <p class="info-line">Оклад, отпуска, варианты планов, настройки (включая автоперенос праздников) и загруженные календари хранятся только в этом браузере. Здесь можно сохранить копию, перенести её на другое устройство или начать заново.</p>
     <div class="local-data-actions">
      <button class="btn btn-primary" type="button" id="export-data">↓ Экспорт в JSON</button>
@@ -207,7 +208,7 @@ html.vacation-embedded body{min-height:0}
  </section>
  <footer class="foot">Источники календарей: <a id="calendar-source" href="https://www.consultant.ru/law/ref/calendar/proizvodstvennye/2027/" target="_blank" rel="noopener">КонсультантПлюс</a> · <a id="decree-source" href="https://www.consultant.ru/document/cons_doc_LAW_544706/" target="_blank" rel="noopener">Постановление о переносах</a>. Основа расчёта: ст. 120 и 139 ТК РФ. Расчёты приблизительные, в выбранном формате зарплаты (на руки / до НДФЛ); без региональных праздников. Введённые зарплата и отпуска сохраняются только в браузере и не передаются поставщику календаря; при обновлении запрашиваются лишь общие календарные данные.</footer>
 </div>
-<script>(()=>{'use strict';
+<script>function startVacation(native){'use strict';
 const D=86400000, KEY='vacation-plus-v2', FED=['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04'];
 const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const SHORT=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
@@ -223,13 +224,13 @@ const baseCalendars={
 };
 const initial={year:2027,salary:100000,salaryMode:'net',base:28,additional:8,week:5,auto:true,autoHolidays:false,hidden:[],years:{},periods:{},scenarios:{},lastCheck:0,priority:50,plannerPrefs:{}};
 function storeGet(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
-const oldShare=(()=>{try{return JSON.parse(localStorage.getItem('vacation-calc-shared')||'null')}catch(e){return null}})();
-const raw=storeGet()||{};const state={...initial,...raw};
+const oldShare=(()=>{if(native&&!native.allowLegacy)return null;try{return JSON.parse(localStorage.getItem('vacation-calc-shared')||'null')}catch(e){return null}})();
+const raw=(native ? native.initial : storeGet())||{};const state={...initial,...raw};
 if(state.salaryMode!=='gross')state.salaryMode='net'; // Backwards-compatible default for existing saved data.
 if(typeof state.autoHolidays!=='boolean')state.autoHolidays=false;
 state.years={...(raw.years||{}),...baseCalendars};
 if(oldShare&&!(raw.salary>0)&&Number(oldShare.salary)>0)state.salary=Number(oldShare.salary);
-for(const y of [2026,2027]){if(!Array.isArray(state.periods[y])){let old=null;try{old=JSON.parse(localStorage.getItem(`vacation-calc-${y}`)||'null')}catch(e){}state.periods[y]=Array.isArray(old?.periods)?old.periods.map(p=>({...p,type:'auto'})):y===2027?[{start:'2027-07-05',end:'2027-07-18',type:'auto'}]:[{start:'2026-07-06',end:'2026-07-19',type:'auto'}]}}
+for(const y of [2026,2027]){if(!Array.isArray(state.periods[y])){let old=null;try{if(!native||native.allowLegacy)old=JSON.parse(localStorage.getItem(`vacation-calc-${y}`)||'null')}catch(e){}state.periods[y]=Array.isArray(old?.periods)?old.periods.map(p=>({...p,type:'auto'})):y===2027?[{start:'2027-07-05',end:'2027-07-18',type:'auto'}]:[{start:'2026-07-06',end:'2026-07-19',type:'auto'}]}}
 state.hidden=Array.isArray(state.hidden)?state.hidden:[];state.scenarios=state.scenarios||{};if(!state.years[state.year]||state.hidden.includes(state.year)){state.year=2027;state.hidden=state.hidden.filter(y=>y!==2027)}
 function normalizePrefs(x){return {count:[2,3,4].includes(x?.count)?x.count:3,gap:Number.isInteger(x?.gap)&&x.gap>=0&&x.gap<=365?x.gap:4,min14:x?.min14!==false,months:Array.from({length:12},(_,i)=>['prefer','exclude'].includes(x?.months?.[i])?x.months[i]:'any')}}
 function migrateSpan(p,auto=state.autoHolidays){if(p.inputMode==='days'||p.inputMode==='dates')return p;return {...p,inputMode:!p.fixedDates&&auto?'days':'dates',...(!p.fixedDates&&auto?{duration:Math.max(1,Math.round((stamp(p.end)-stamp(p.start))/D)+1)}:{})}}
@@ -240,7 +241,13 @@ state.plannerPrefs=state.plannerPrefs&&typeof state.plannerPrefs==='object'?stat
 function prefs(){return state.plannerPrefs[state.year]||(state.plannerPrefs[state.year]=normalizePrefs(null))}
 let calSelection=[],calLastSeen=new Set(),lastPlanPool=null;
 let mode='money' , suggestions=[], annualPlans=[];let calendar=null,counts=[],allCandidates=new Map();
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){setFeedback('Хранилище браузера переполнено или недоступно. Изменения могут не сохраниться.','err')}}
+let replacing=false;
+function persist(){
+ if(replacing)return;
+ const value=JSON.stringify(state);
+ if(native){native.save(value).catch(e=>native.warn('Не удалось сохранить изменения: '+e.message));return}
+ try{localStorage.setItem(KEY,value)}catch(e){setFeedback('Хранилище браузера переполнено или недоступно. Изменения могут не сохраниться.','err')}
+}
 function datesOfYear(y){let list=[];for(let t=Date.UTC(y,0,1),end=Date.UTC(y+1,0,1);t<end;t+=D)list.push(t);return list}
 function getCalendar(y,week){const c=state.years[y];if(!c)throw Error('Нет календаря на '+y);
  const h=new Set(FED.map(x=>y+'-'+x)),gov5=new Set(),gov6=new Set(),work5=new Set(),sources5=new Set(),sources6=new Set();
@@ -466,9 +473,11 @@ async function checkUpdates(manual=false){
 function repaint(){allCandidates.clear();renderAll();persist()}
 // Local backups. This code is deliberately separate from the calculation engine.
 function storageFeedback(msg,kind=''){const el=$('storage-status');el.textContent=msg;el.className='feedback '+kind}
-function exportLocalData(){
+async function exportLocalData(){
  try{
   const data={app:'vacation-plus',formatVersion:1,exportedAt:new Date().toISOString(),data:state};
+  const filename=`otpusk-backup-${state.year}-${new Date().toISOString().slice(0,10)}.json`;
+  if(native){const result=await native.files.saveBackup({filename,contents:JSON.stringify(data,null,2)});storageFeedback(result.cancelled?'Экспорт отменён.':'Резервная копия сохранена в выбранном месте.',result.cancelled?'':'ok');return}
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download=`otpusk-backup-${state.year}-${new Date().toISOString().slice(0,10)}.json`;
@@ -542,14 +551,16 @@ async function importLocalData(file){
   const contents=await file.text();const payload=JSON.parse(contents);
   const imported=validateImportedData(payload);
   if(!confirm('Импорт заменит текущий оклад, отпуска, сценарии, календари и настройки. Продолжить?')){storageFeedback('Импорт отменён. Текущие данные не изменены.');return}
-  localStorage.setItem(KEY,JSON.stringify(imported));
+  if(native){replacing=true;try{await native.replace(JSON.stringify(imported))}catch(e){replacing=false;throw e}}
+  else localStorage.setItem(KEY,JSON.stringify(imported));
   location.reload();
  }catch(e){storageFeedback('Не удалось импортировать данные: '+e.message,'err')}
 }
-function resetLocalData(){
+async function resetLocalData(){
  if(!confirm('Сбросить все сохранённые данные? Оклад, отпуска, сценарии и загруженные календари будут удалены. Отменить действие нельзя.'))return;
  try{
-  [KEY,'vacation-calc-shared','vacation-calc-2026','vacation-calc-2027'].forEach(k=>localStorage.removeItem(k));
+  if(native){replacing=true;try{await native.replace('null')}catch(e){replacing=false;throw e}}
+  else [KEY,'vacation-calc-shared','vacation-calc-2026','vacation-calc-2027'].forEach(k=>localStorage.removeItem(k));
   location.reload();
  }catch(e){storageFeedback('Не удалось сбросить данные: '+e.message,'err')}
 }
@@ -581,14 +592,49 @@ $('year-tiles').addEventListener('click',e=>{const b=e.target.closest('[data-tog
 $('auto-check').addEventListener('change',e=>{state.auto=e.target.checked;persist()});
 $('holiday-auto-extend').addEventListener('change',e=>{state.autoHolidays=e.target.checked;renderInputs();repaint()});
 $('check-updates').addEventListener('click',()=>checkUpdates(true));
-$('export-data').addEventListener('click',exportLocalData);
-$('import-data').addEventListener('click',()=>$('import-file').click());
+let fileBusy=false;
+async function withFileOperation(fn){if(fileBusy)return;fileBusy=true;for(const id of ['export-data','import-data','reset-data'])$(id).disabled=true;try{await fn()}catch(e){storageFeedback('Операция с файлом не выполнена: '+e.message,'err')}finally{fileBusy=false;for(const id of ['export-data','import-data','reset-data'])$(id).disabled=false}}
+$('export-data').addEventListener('click',()=>native?withFileOperation(exportLocalData):exportLocalData());
+$('import-data').addEventListener('click',()=>{if(!native){$('import-file').click();return}withFileOperation(async()=>{const r=await native.files.openBackup();if(r.cancelled){storageFeedback('Импорт отменён.');return}await importLocalData(new Blob([r.contents],{type:'application/json'}))})});
 $('import-file').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';await importLocalData(file)});
-$('reset-data').addEventListener('click',resetLocalData);
+$('reset-data').addEventListener('click',()=>native?withFileOperation(resetLocalData):resetLocalData());
 $('load-year-btn').addEventListener('click',async()=>{const y=Number($('load-year').value);$('load-year-btn').disabled=true;setFeedback(`Загружаем календарь ${y}…`);try{await retrieveYear(y)}catch(e){setFeedback(e.message,'err')}finally{$('load-year-btn').disabled=false}});
 loadCalendar();renderYearSelect();renderInputs();renderAll();persist();
 if(state.auto&&Date.now()-(Number(state.lastCheck)||0)>7*86400000){setTimeout(()=>checkUpdates(false),1200)}
-})();</script>
+if(native){
+ const note=$('native-info');note.hidden=false;note.textContent='Android · '+native.version+' · локальное хранилище Preferences';
+ $('native-storage-note').hidden=false;
+ const panel=$('local-data-title').closest('section');panel.querySelector('p.info-line:not([id])').textContent='Оклад, отпуска, сценарии, настройки и календари сохраняются локально на устройстве. Резервный JSON можно перенести в веб-версию.';panel.querySelector('p.storage-footnote').textContent='Экспорт сохраняет JSON в выбранное место. Импорт заменяет данные после подтверждения. Файл не отправляется автоматически.';
+ native.app.addListener('backButton',async()=>{if(fileBusy||replacing)return;if(document.querySelector('.tab.active')?.dataset.tab!=='calculator'){switchTab('calculator');window.scrollTo(0,0);return}if(document.activeElement?.matches('input,textarea,select')){document.activeElement.blur();return}try{await native.flush();await native.app.exitApp()}catch(e){native.warn('Сохранение не завершено: '+e.message)}}).catch(e=>native.warn('Не удалось настроить кнопку Назад: '+e.message));
+}
+}
+// NATIVE_ADAPTER_START
+async function createVacationNative(plugins,local,warn){
+ const key='vacation-plus-v2',legacy=[key,'vacation-calc-shared','vacation-calc-2026','vacation-calc-2027'];
+ const prefs=plugins.Preferences,app=plugins.App,files=plugins.VacationFiles;
+ if(!prefs||!app||!files)throw Error('Не загружены компоненты Android.');
+ const result=await prefs.get({key});
+ const parse=value=>{const x=JSON.parse(value);if(x!==null&&(typeof x!=='object'||Array.isArray(x)))throw Error('Некорректные сохранённые данные');return x};
+ let initial=null;
+ if(result.value!==null){initial=parse(result.value)}
+ else{let old=null;try{old=local.getItem(key)}catch(e){}if(old!==null)initial=parse(old)}
+ let tail=Promise.resolve(),lastError=null;
+ const clearLegacy=()=>{for(const k of legacy)try{local.removeItem(k)}catch(e){}};
+ function save(value){
+  const next=tail.then(async()=>{await prefs.set({key,value});clearLegacy();lastError=null;warn('')});
+  tail=next.catch(e=>{lastError=e});return next;
+ }
+ let version='версия неизвестна';try{const info=await app.getInfo();version=info.version+' ('+info.build+')'}catch(e){}
+ return {initial,allowLegacy:result.value===null,save,replace:save,flush:async()=>{await tail;if(lastError)throw lastError},warn,version,app,files};
+}
+// NATIVE_ADAPTER_END
+if(globalThis.Capacitor?.isNativePlatform?.()){
+ const warning=document.getElementById('native-warning');
+ const warn=msg=>{warning.textContent=msg;warning.hidden=!msg};
+ const container=document.querySelector('.container');container.inert=true;
+ createVacationNative(globalThis.Capacitor.Plugins,localStorage,warn).then(native=>{startVacation(native);container.inert=false}).catch(e=>{warn('Не удалось открыть локальные данные. Они не будут перезаписаны. Перезапусти приложение. '+e.message);document.getElementById('native-warning').style.position='fixed'});
+}else startVacation();
+</script>
 <script>
 /* Optional cross-origin iframe sizing. No user data is sent. */
 (()=>{'use strict';

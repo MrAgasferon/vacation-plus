@@ -16,7 +16,7 @@ assert.ok(scripts[0].includes(marker), 'Update harness if calculation core moves
 const prefix = scripts[0].slice(0, scripts[0].indexOf(marker));
 function core() {
   const ctx = vm.createContext({localStorage:{getItem:()=>null}, console});
-  vm.runInContext(prefix + '\n globalThis.api={state,getCalendar,loadCalendar,compute,resolvePeriod,baseCalendars,iso}; })();', ctx);
+  vm.runInContext(prefix + '\n globalThis.api={state,getCalendar,loadCalendar,compute,resolvePeriod,baseCalendars,iso}; } startVacation();', ctx);
   return ctx.api;
 }
 test('Calendar monthly working days match embedded reference for 2026/2027 and both schedules',()=>{
