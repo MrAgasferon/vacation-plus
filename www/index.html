@@ -104,6 +104,101 @@ input,select{width:100%;border:1px solid #36445e;border-radius:12px;background:#
 /* Embedded mode: the content must not depend on the iframe height. */
 html.vacation-embedded body{min-height:0}
 #native-warning{position:sticky;top:0;z-index:1000;margin:0;padding:12px 16px;background:#542b36;color:#ffe2e5;border-bottom:1px solid #a85b67;overflow-wrap:anywhere}#native-warning[hidden],#native-info[hidden],#native-storage-note[hidden]{display:none}
+/* Mobile UI: no desktop rules are overridden outside this opt-in class. */
+.mobile-only{display:none!important}
+@media screen and (max-width:760px){
+html.mobile-ui{scroll-behavior:auto;scroll-padding-bottom:100px}
+.mobile-ui .mobile-only{display:revert!important}
+.mobile-ui .container{max-width:620px;padding:14px 12px calc(88px + env(safe-area-inset-bottom,0px));margin:auto}
+.mobile-ui .head{margin:0 0 16px;align-items:center;gap:12px;padding:4px 2px}
+.mobile-ui .head .eyebrow,.mobile-ui .head p,.mobile-ui .year-picker label{display:none}
+.mobile-ui .head h1{font-size:clamp(21px,6vw,28px);margin:0;letter-spacing:-.045em}
+.mobile-ui .year-picker{min-width:0}.mobile-ui .year{font-size:16px;padding:8px;min-height:44px;width:86px}
+.mobile-ui .tabs{display:none}
+.mobile-ui .mobile-nav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));position:fixed;bottom:0;left:0;right:0;z-index:90;background:#10192d;border-top:1px solid #344360;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));gap:4px;box-shadow:0 -8px 26px #050b1855}
+.mobile-ui .mobile-nav button{background:transparent;color:#aabbd7;border:1px solid transparent;border-radius:12px;min-height:56px;padding:5px 2px;display:grid;place-items:center;gap:2px;font:700 11px/1.2 inherit;font-size:11px;font-weight:700;min-width:0}
+.mobile-ui .mobile-nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mobile-ui .mobile-nav button[aria-current=page]{background:#293c66;color:#cbd6ff;border-color:#485e91}
+.mobile-ui.mobile-editing .mobile-nav{display:none!important}
+.mobile-ui .mobile-subnav{display:flex!important;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.mobile-ui .mobile-subnav button{flex:1 1 0;background:#141e34;color:#b9c9e6;border:1px solid #34425e;border-radius:10px;padding:8px 4px;min-height:44px;min-width:0;font-size:12px;font-weight:750}
+.mobile-ui .mobile-subnav button[aria-pressed=true]{background:#344d7b;border-color:#6e8bd3;color:#fff}
+.mobile-ui .mobile-subnav[hidden],.mobile-ui .mobile-only[hidden]{display:none!important}
+.mobile-ui .panel{padding:15px;border-radius:17px;margin:0;min-width:0}
+.mobile-ui .panel h2,.mobile-ui .pane-title h2{font-size:16px;margin-bottom:10px}.mobile-ui .pane-title{margin-bottom:10px}
+.mobile-ui .btn,.mobile-ui .strategy,.mobile-ui .year-tile{min-height:44px;white-space:normal}
+.mobile-ui input:not([type=checkbox]):not([type=range]),.mobile-ui select{min-height:44px;font-size:16px}
+.mobile-ui .layout{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.mobile-ui #tab-calculator .sidebar,.mobile-ui #tab-calculator .main{display:contents}
+.mobile-ui #tab-calculator .panel,.mobile-ui #tab-calculator .results-card{margin:0}
+.mobile-ui .results-card{order:-4;padding:18px;border-radius:19px}
+.mobile-ui .results-card .kicker{font-size:10px;letter-spacing:.065em}
+.mobile-ui .result-number{font-size:clamp(32px,10vw,46px);margin:8px 0 4px;overflow-wrap:anywhere}
+.mobile-ui .result-description{font-size:12px;overflow-wrap:anywhere}
+.mobile-ui .mobile-budget{display:block!important;border-top:1px solid #3b4f71;margin-top:14px;padding-top:12px;font-size:12px;color:#c3d2ee}
+.mobile-ui .mobile-budget-line{display:flex;align-items:center;justify-content:space-between;gap:8px}.mobile-ui .mobile-budget-line strong{font-size:19px;color:#f3f7ff}
+.mobile-ui .mobile-meter{height:5px;border-radius:10px;background:#344665;overflow:hidden;margin-top:8px}.mobile-ui .mobile-meter i{display:block;height:100%;background:#8ea4ff;border-radius:10px}
+.mobile-ui .mobile-result-toggle{display:block!important;width:100%;margin-top:12px;text-align:left;background:transparent;color:#d4e0ff;border:0;border-top:1px solid #3b4f71;padding:12px 0 0;min-height:44px;font-size:13px;font-weight:700}
+.mobile-ui:not(.mobile-details) .results-card .four,.mobile-ui:not(.mobile-details) .results-card .result-footer,.mobile-ui:not(.mobile-details) [data-mobile-panel=breakdown]{display:none!important}
+.mobile-ui .four{margin-top:12px;gap:8px}.mobile-ui .metric{padding:10px}.mobile-ui .metric .num{font-size:16px}.mobile-ui .result-footer{font-size:11px}
+.mobile-ui [data-mobile-panel=salary]{order:-3}.mobile-ui [data-mobile-panel=periods]{order:-2}.mobile-ui [data-mobile-panel=breakdown]{order:-1}
+.mobile-ui [data-mobile-panel=formulas]{display:none!important}
+.mobile-ui .mobile-salary-toggle{display:flex!important;justify-content:space-between;align-items:center;gap:8px;text-align:left;width:100%;padding:0;min-height:44px;color:#e8efff;background:transparent;border:0;font-weight:700}
+.mobile-ui .mobile-salary-toggle span{font-size:12px;color:#a9bad6;font-weight:600}.mobile-ui .mobile-salary-toggle strong{font-size:19px;display:block;color:#f3f7ff}
+.mobile-ui [data-mobile-panel=salary] h2{display:none}
+.mobile-ui:not(.mobile-salary-open) [data-mobile-panel=salary]>:not(.mobile-salary-toggle){display:none!important}
+.mobile-ui [data-mobile-panel=salary] .field-label{margin-top:12px}.mobile-ui [data-mobile-panel=salary] .big-input input{font-size:26px}.mobile-ui .salary-hint{min-height:0}
+.mobile-ui [data-mobile-panel=periods] .budget,.mobile-ui [data-mobile-panel=periods] .budget-sub,.mobile-ui [data-mobile-panel=periods]>h2:not(.mobile-only){display:none}
+.mobile-ui [data-mobile-panel=periods]>h2.mobile-only{display:block!important}
+.mobile-ui .cal-legend:not(.mobile-only){display:none}
+.mobile-ui .cal-legend.mobile-only{display:block!important}
+.mobile-ui [data-mobile-panel=periods] .period{padding:10px;margin-bottom:8px}
+.mobile-ui .period .period-top{margin:0;min-height:44px}.mobile-ui .period .period-top>span{display:none}
+.mobile-ui .mobile-period-toggle{display:flex!important;flex:1;align-items:center;gap:9px;text-align:left;color:#edf3ff;background:transparent;border:0;padding:4px 0;min-width:0;min-height:44px}
+.mobile-ui .mobile-period-toggle .mobile-period-text{flex:1;min-width:0}.mobile-ui .mobile-period-toggle strong{display:block;font-size:14px;overflow-wrap:anywhere}.mobile-ui .mobile-period-toggle small{display:block;font-size:11px;color:#a9bad6;overflow-wrap:anywhere}.mobile-ui .mobile-period-toggle .mobile-chevron{font-size:18px;color:#a9bad6}
+.mobile-ui .period .remove{width:44px;min-width:44px;min-height:44px;font-size:24px}
+.mobile-ui .period:not(.mobile-period-open)>:not(.period-top){display:none!important}
+.mobile-ui .period .input-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.mobile-ui .period .type-select{grid-template-columns:1fr;gap:4px}.mobile-ui .period input,.mobile-ui .period select{padding:8px 5px}
+.mobile-ui .period .lock-row{min-height:44px}.mobile-ui .period .lock-row input{min-width:20px;min-height:20px}
+.mobile-ui .slot-compare{gap:6px}.mobile-ui .slot-compare button{flex:1;min-height:44px}
+.mobile-ui[data-mobile-screen=calendar] [data-mobile-panel=salary],.mobile-ui[data-mobile-screen=calendar] [data-mobile-panel=periods],.mobile-ui[data-mobile-screen=calendar] [data-mobile-panel=result],.mobile-ui[data-mobile-screen=calendar] [data-mobile-panel=breakdown]{display:none!important}
+.mobile-ui[data-mobile-screen=calc] [data-mobile-panel=calendar],.mobile-ui[data-mobile-screen=calc] [data-mobile-panel=heat],.mobile-ui[data-mobile-screen=calc] [data-mobile-panel=reco]{display:none!important}
+.mobile-ui[data-mobile-screen=calendar]:not([data-mobile-sub=month]) [data-mobile-panel=calendar],.mobile-ui[data-mobile-screen=calendar]:not([data-mobile-sub=heat]) [data-mobile-panel=heat],.mobile-ui[data-mobile-screen=calendar]:not([data-mobile-sub=reco]) [data-mobile-panel=reco]{display:none!important}
+.mobile-ui [data-mobile-panel=calendar]{display:flex;flex-direction:column;gap:9px}
+.mobile-ui [data-mobile-panel=calendar] .pane-title{order:0;margin:0}.mobile-ui [data-mobile-panel=calendar] .pane-title h2{margin:0;font-size:14px}.mobile-ui [data-mobile-panel=calendar] .pill{font-size:10px}
+.mobile-ui .mobile-month-nav{display:grid!important;grid-template-columns:44px minmax(0,1fr) 44px;gap:8px;align-items:center;order:1}
+.mobile-ui .mobile-month-nav button{min-height:44px;background:#223450;color:#e5edff;border:1px solid #405174;border-radius:11px;font-size:23px;line-height:1}.mobile-ui .mobile-month-nav button:disabled{opacity:.35}
+.mobile-ui .mobile-month-nav select{text-align:center;background:#18263f;font-weight:750}
+.mobile-ui .calendar-grid{order:2;display:block}.mobile-ui .cal-month{display:none;padding:7px;border-radius:12px}
+.mobile-ui .cal-month h3{display:none}.mobile-ui .weekrow,.mobile-ui .days{gap:3px}.mobile-ui .weekrow span{font-size:11px;margin:4px 0 8px}
+.mobile-ui .days button.day{height:clamp(36px,11vw,49px);min-height:36px;font-size:15px;font-weight:650;border-radius:7px}
+.mobile-ui .mobile-day-tip{display:block!important;order:3;min-height:32px;margin:0;color:#c4d2ec;font-size:12px;overflow-wrap:anywhere}
+.mobile-ui .cal-controls{order:4;margin:0;padding:10px}.mobile-ui .cal-controls .reco-ctrl{flex:1}.mobile-ui .cal-controls .reco-ctrl select{max-width:125px}.mobile-ui .cal-controls #cal-add{width:100%}.mobile-ui .cal-controls .cal-legend{line-height:1.55}.mobile-ui .cal-controls #cal-clear{font-size:12px}.mobile-ui [data-mobile-panel=calendar] .legend{order:5;gap:8px;margin:0}
+.mobile-ui .heatmap{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mobile-ui .heat{min-height:105px;padding:10px}.mobile-ui .heat .h-delta{font-size:17px}
+.mobile-ui .reco-list,.mobile-ui .plan-grid,.mobile-ui .compare-grid{grid-template-columns:minmax(0,1fr)}
+.mobile-ui .strategy-bar{gap:5px}.mobile-ui .strategy{flex:1 1 30%;padding:8px 5px;font-size:11px}.mobile-ui .reco-ctrl{flex-wrap:wrap}.mobile-ui .reco-ctrl select{width:auto;max-width:100%}
+.mobile-ui[data-mobile-screen=plan][data-mobile-sub=annual] [data-mobile-panel=compare],.mobile-ui[data-mobile-screen=plan][data-mobile-sub=compare] [data-mobile-panel=annual]{display:none!important}
+.mobile-ui #tab-planner .stack{gap:0}.mobile-ui .planner-options{padding:10px}.mobile-ui .month-options{grid-template-columns:repeat(2,minmax(0,1fr))}.mobile-ui .month-options select{font-size:13px!important}
+.mobile-ui #tab-settings .settings-grid{display:block}.mobile-ui #tab-settings .settings-grid>.panel{margin:0 0 10px}
+.mobile-ui[data-mobile-screen=more]:not([data-mobile-sub=options]) [data-mobile-panel=options],.mobile-ui[data-mobile-screen=more]:not([data-mobile-sub=years]) [data-mobile-panel=years],.mobile-ui[data-mobile-screen=more]:not([data-mobile-sub=data]) #tab-settings .local-data-panel{display:none!important}
+.mobile-ui .field-row{grid-template-columns:minmax(0,1fr) 100px;gap:8px}.mobile-ui .switch-row{min-height:44px}.mobile-ui .switch-row input{flex-shrink:0;width:20px;height:20px}.mobile-ui .local-data-actions{display:grid;grid-template-columns:1fr}.mobile-ui .year-add input{max-width:105px}
+.mobile-ui .foot{display:none}.mobile-ui[data-mobile-screen=more][data-mobile-sub=docs] .foot{display:block;padding:12px 4px 0}
+.mobile-ui .tablewrap{overflow:visible}.mobile-ui #breakdown table,.mobile-ui #breakdown tbody{display:block;min-width:0;width:100%}.mobile-ui #breakdown thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
+.mobile-ui #breakdown tr{display:block;border:1px solid #34445e;border-radius:12px;padding:10px;margin-bottom:8px}.mobile-ui #breakdown td{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border:0;text-align:right;white-space:normal;overflow-wrap:anywhere}.mobile-ui #breakdown td:first-child{text-align:left;display:block;border-bottom:1px solid #34445e;margin-bottom:4px;padding-bottom:8px}.mobile-ui #breakdown td:not(:first-child)::before{content:attr(data-mobile-label);text-align:left;color:#aebed9;font-weight:500;flex:1}
+}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='0'] .calendar-grid .cal-month:nth-child(1){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='1'] .calendar-grid .cal-month:nth-child(2){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='2'] .calendar-grid .cal-month:nth-child(3){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='3'] .calendar-grid .cal-month:nth-child(4){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='4'] .calendar-grid .cal-month:nth-child(5){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='5'] .calendar-grid .cal-month:nth-child(6){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='6'] .calendar-grid .cal-month:nth-child(7){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='7'] .calendar-grid .cal-month:nth-child(8){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='8'] .calendar-grid .cal-month:nth-child(9){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='9'] .calendar-grid .cal-month:nth-child(10){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='10'] .calendar-grid .cal-month:nth-child(11){display:block}}
+@media screen and (max-width:760px){.mobile-ui[data-mobile-month='11'] .calendar-grid .cal-month:nth-child(12){display:block}}
+
 </style></head><body><div id="native-warning" role="alert" hidden></div>
 <div class="container">
  <header class="head">
@@ -209,6 +304,7 @@ html.vacation-embedded body{min-height:0}
  <footer class="foot">Источники календарей: <a id="calendar-source" href="https://www.consultant.ru/law/ref/calendar/proizvodstvennye/2027/" target="_blank" rel="noopener">КонсультантПлюс</a> · <a id="decree-source" href="https://www.consultant.ru/document/cons_doc_LAW_544706/" target="_blank" rel="noopener">Постановление о переносах</a>. Основа расчёта: ст. 120 и 139 ТК РФ. Расчёты приблизительные, в выбранном формате зарплаты (на руки / до НДФЛ); без региональных праздников. Введённые зарплата и отпуска сохраняются только в браузере и не передаются поставщику календаря; при обновлении запрашиваются лишь общие календарные данные.</footer>
 </div>
 <script>function startVacation(native){'use strict';
+let mobileUI=null;
 const D=86400000, KEY='vacation-plus-v2', FED=['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04'];
 const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const SHORT=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
@@ -397,8 +493,8 @@ function renderSettings(){renderSalaryMode();setText('planner-budget',budget()+'
  const ys=Object.keys(state.years).map(Number).sort((a,b)=>b-a);$('year-tiles').innerHTML=ys.map(y=>`<button class="year-tile ${state.hidden.includes(y)?'is-hidden':''} ${state.year===y?'current':''}" type="button" data-toggle-year="${y}"><div>${y} ${state.hidden.includes(y)?'＋':'✓'}</div><div class="tiny">${state.hidden.includes(y)?'Показать':'Скрыть'}</div></button>`).join('');$('last-check').textContent=state.lastCheck?'Последняя проверка: '+new Date(state.lastCheck).toLocaleDateString('ru-RU'):'Ещё не проверяли';}
 function renderYearSelect(){const ys=Object.keys(state.years).map(Number).filter(y=>!state.hidden.includes(y)).sort((a,b)=>b-a);$('year-select').innerHTML=ys.map(y=>`<option value="${y}" ${state.year===y?'selected':''}>${y}</option>`).join('')}
 function changeYear(y){if(!state.years[y]||state.hidden.includes(y))return;if(!Array.isArray(state.periods[y]))state.periods[y]=[];state.year=y;calSelection=[];loadCalendar();document.title=`Отпуск × деньги — ${y}`;renderYearSelect();renderInputs();renderAll();persist()}
-function renderAll(){setText('calendar-title',`Производственный календарь — ${state.year}`);setText('workdays-pill',`${counts.reduce((a,b)=>a+b,0)} рабочих дней · ${state.week}/`+(7-state.week));const c=state.years[state.year];$('calendar-source').href=`https://www.consultant.ru/law/ref/calendar/proizvodstvennye/${state.year}/`;setText('calendar-source',`Производственный календарь ${state.year}`);$('decree-source').href=c.decreeUrl||'https://www.consultant.ru/law/ref/calendar/';setText('decree-source',c.decree||'Нормативное основание');renderResult();renderHeat();renderReco();renderCompare();renderPlannerControls();generatePlans();renderSettings()}
-function switchTab(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='tab-'+id));}
+function renderAll(){setText('calendar-title',`Производственный календарь — ${state.year}`);setText('workdays-pill',`${counts.reduce((a,b)=>a+b,0)} рабочих дней · ${state.week}/`+(7-state.week));const c=state.years[state.year];$('calendar-source').href=`https://www.consultant.ru/law/ref/calendar/proizvodstvennye/${state.year}/`;setText('calendar-source',`Производственный календарь ${state.year}`);$('decree-source').href=c.decreeUrl||'https://www.consultant.ru/law/ref/calendar/';setText('decree-source',c.decree||'Нормативное основание');renderResult();renderHeat();renderReco();renderCompare();renderPlannerControls();generatePlans();renderSettings();mobileUI?.refresh()}
+function switchTab(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='tab-'+id));mobileUI?.onTab(id);}
 const plainISO=x=>typeof x==='string'?x.slice(0,10):x&&typeof x.date==='string'?x.date.slice(0,10):null;
 function normalizedRemote(y,json){if(!json||Number(json.year)!==y||!Array.isArray(json.holidays)||!Array.isArray(json.transferredHolidays)||!json.decree)throw Error('Источник вернул неполный календарь.');
  const decree=json.decree,ttl=String(decree.title||''),num=String(decree.number||''),url=String(decree.url||''),d=String(decree.date||'');
@@ -600,19 +696,103 @@ $('import-file').addEventListener('change',async e=>{const file=e.target.files?.
 $('reset-data').addEventListener('click',()=>native?withFileOperation(resetLocalData):resetLocalData());
 $('load-year-btn').addEventListener('click',async()=>{const y=Number($('load-year').value);$('load-year-btn').disabled=true;setFeedback(`Загружаем календарь ${y}…`);try{await retrieveYear(y)}catch(e){setFeedback(e.message,'err')}finally{$('load-year-btn').disabled=false}});
 loadCalendar();renderYearSelect();renderInputs();renderAll();persist();
+mobileUI=createVacationMobile({switchTab,periods:current,resolve:resolvePeriod,dateText,money,summary:()=>{const r=compute(current());return {year:state.year,total:budget(),paid:r.paid||0,error:r.error,salary:state.salary,mode:state.salaryMode}}});
 if(state.auto&&Date.now()-(Number(state.lastCheck)||0)>7*86400000){setTimeout(()=>checkUpdates(false),1200)}
 if(native){
  const note=$('native-info');note.hidden=false;note.textContent='Android · '+native.version+' · локальное хранилище Preferences';
  $('native-storage-note').hidden=false;
  const panel=$('local-data-title').closest('section');panel.querySelector('p.info-line:not([id])').textContent='Оклад, отпуска, сценарии, настройки и календари сохраняются локально на устройстве. Резервный JSON можно перенести в веб-версию.';panel.querySelector('p.storage-footnote').textContent='Экспорт сохраняет JSON в выбранное место. Импорт заменяет данные после подтверждения. Файл не отправляется автоматически.';
  document.addEventListener('vacation-native-back',createVacationBackHandler({
-  busy:()=>fileBusy||replacing,activeTab:()=>document.querySelector('.tab.active')?.dataset.tab,
-  showCalculator:()=>{switchTab('calculator');window.scrollTo(0,0)},
+  busy:()=>fileBusy||replacing,activeTab:()=>mobileUI?.activeTab()||document.querySelector('.tab.active')?.dataset.tab,
+  showCalculator:()=>{if(mobileUI?.back())return;switchTab('calculator');window.scrollTo(0,0)},
   blurInput:()=>{const el=document.activeElement;if(el?.matches('input,textarea,select')){el.blur();return true}return false},
   flush:()=>native.flush(),exit:()=>native.app.exitApp(),warn:msg=>native.warn(msg)
  }));
 }
 }
+// MOBILE_UI_START
+function createVacationMobile(api){
+ 'use strict';
+ const root=document.documentElement, $=id=>document.getElementById(id), q=(s,p=document)=>p.querySelector(s);
+ // Embedded desktop integrations keep the original layout even at narrow widths.
+ if(window.self!==window.top||!window.matchMedia)return null;
+ const mq=window.matchMedia('(max-width:760px)');
+ const months=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+ const icons={calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h1m6 0h1m-8 4h1m6 0h1"/>',calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18m-13 4h1m6 0h1m-8 3h1m6 0h1"/>',plan:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 3v3m8-3v3M3 10h18m-13 5 2 2 5-5"/>',more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>'};
+ const make=(tag,cls,html='')=>{const el=document.createElement(tag);el.className='mobile-only '+cls;el.innerHTML=html;return el};
+ const panel=(name,el)=>{el.dataset.mobilePanel=name;return el};
+ const salary=panel('salary',$('salary').closest('.panel')), periods=panel('periods',$('periods').closest('.panel')), result=panel('result',q('.results-card'));
+ panel('formulas',q('.sidebar .how')); panel('breakdown',$('breakdown').closest('.panel')); panel('heat',$('heatmap').closest('.panel')); panel('reco',$('recommendations').closest('.panel'));
+ const cal=panel('calendar',$('calendar').closest('.panel'));
+ const mobileHeading=document.createElement('h2');mobileHeading.className='mobile-only';mobileHeading.textContent='Мои отпуска';periods.prepend(mobileHeading);
+ const mobileLegend=document.createElement('div');mobileLegend.className='mobile-only cal-legend';mobileLegend.innerHTML='<span class="good">Зелёная черта — плюс</span> · <span class="bad">красная — минус</span> · серая — около нуля. Нажми дату, чтобы увидеть сумму.';q('.cal-legend',cal).after(mobileLegend);
+ panel('annual',$('annual-plans').closest('.panel'));panel('compare',$('compare-grid').closest('.panel'));
+ panel('options',$('leave-base').closest('.panel'));panel('years',$('year-tiles').closest('.panel'));
+ const nav=make('nav','mobile-nav');nav.setAttribute('aria-label','Мобильная навигация');
+ for(const [key,label] of [['calc','Расчёт'],['calendar','Календарь'],['plan','План'],['more','Ещё']]){
+  const b=document.createElement('button');b.type='button';b.dataset.mobileNav=key;b.innerHTML=`<svg aria-hidden="true" viewBox="0 0 24 24">${icons[key]}</svg><span>${label}</span>`;nav.append(b);
+ }
+ q('.container').append(nav);
+ function subNav(items){const el=make('nav','mobile-subnav');el.setAttribute('aria-label','Подразделы');for(const [key,label] of items){const b=document.createElement('button');b.type='button';b.dataset.mobileSub=key;b.textContent=label;b.setAttribute('aria-pressed','false');el.append(b)}return el}
+ const calNav=subNav([['month','Календарь'],['heat','По месяцам'],['reco','Подбор дат']]);$('tab-calculator').prepend(calNav);
+ const planNav=subNav([['annual','Годовой план'],['compare','Сценарии A/B/C']]);$('tab-planner').prepend(planNav);
+ const moreItems=[['options','Параметры'],['years','Годы'],['data','Данные'],['docs','Справка']];
+ const moreNav=subNav(moreItems), docNav=subNav(moreItems);$('tab-settings').prepend(moreNav);$('tab-documentation').prepend(docNav);
+ const moneyCard=make('div','mobile-budget','<div class="mobile-budget-line"><span>Осталось дней отпуска</span><strong id="mobile-budget-value">—</strong></div><div class="mobile-meter" aria-hidden="true"><i></i></div><div id="mobile-budget-note" class="small" style="margin-top:7px"></div>');result.append(moneyCard);
+ const details=make('button','mobile-result-toggle','Подробный расчёт ▾');details.type='button';details.setAttribute('aria-expanded','false');details.setAttribute('aria-controls','breakdown');result.append(details);
+ const salaryButton=make('button','mobile-salary-toggle','<div><span id="mobile-salary-label">Моя зарплата</span><strong id="mobile-salary-value">—</strong></div><span id="mobile-salary-arrow">Изменить ›</span>');salaryButton.type='button';salaryButton.setAttribute('aria-expanded','false');salaryButton.setAttribute('aria-controls','salary');salary.prepend(salaryButton);
+ const monthNav=make('div','mobile-month-nav','<button type="button" data-month-step="-1" aria-label="Предыдущий месяц">‹</button><select aria-label="Месяц календаря" id="mobile-month-select"></select><button type="button" data-month-step="1" aria-label="Следующий месяц">›</button>');
+ const monthSelect=q('select',monthNav);months.forEach((name,i)=>monthSelect.add(new Option(name,String(i))));cal.insertBefore(monthNav,$('calendar'));
+ const tip=make('p','mobile-day-tip','Нажми на дату: покажем её статус и выгоду.');tip.setAttribute('aria-live','polite');cal.insertBefore(tip,$('calendar').nextSibling);
+ let screen='calc',sub='',month=0,year=null,opened=-1,enabled=false;
+ function setMonth(value){month=Math.max(0,Math.min(11,Number(value)||0));root.dataset.mobileMonth=String(month);monthSelect.value=String(month);q('[data-month-step="-1"]',monthNav).disabled=month===0;q('[data-month-step="1"]',monthNav).disabled=month===11;tip.textContent='Нажми на дату: покажем её статус и выгоду.'}
+ function activeTab(){return q('.tabs .tab.active')?.dataset.tab||'calculator'}
+ function paint(){root.dataset.mobileScreen=screen;root.dataset.mobileSub=sub;for(const b of nav.querySelectorAll('button')){if(b.dataset.mobileNav===screen)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')}
+  calNav.hidden=screen!=='calendar';planNav.hidden=screen!=='plan';moreNav.hidden=screen!=='more';docNav.hidden=screen!=='more';
+  for(const n of [calNav,planNav,moreNav,docNav])for(const b of n.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.mobileSub===sub));
+ }
+ function onTab(tab){if(!enabled)return;[screen,sub]=tab==='planner'?['plan','annual']:tab==='settings'?['more','options']:tab==='documentation'?['more','docs']:['calc',''];paint();window.scrollTo(0,0)}
+ function show(next,part){if(!enabled)return;const s=next==='calendar'?(part||'month'):next==='plan'?(part||'annual'):next==='more'?(part||'options'):'';
+  api.switchTab(next==='plan'?'planner':next==='more'?(s==='docs'?'documentation':'settings'):'calculator');screen=next;sub=s;paint();window.scrollTo(0,0);
+ }
+ function updateMode(){enabled=mq.matches;root.classList.toggle('mobile-ui',enabled);if(enabled){onTab(activeTab());refresh()}else{root.classList.remove('mobile-editing');}}
+ function toggleDetails(open){root.classList.toggle('mobile-details',open);details.setAttribute('aria-expanded',String(open));details.textContent=open?'Скрыть подробности ▴':'Подробный расчёт ▾'}
+ function toggleSalary(open){root.classList.toggle('mobile-salary-open',open);salaryButton.setAttribute('aria-expanded',String(open));$('mobile-salary-arrow').textContent=open?'Свернуть ▴':'Изменить ›'}
+ function refreshPeriods(){const list=api.periods();if(opened>=list.length)opened=-1;
+  for(const [i,p] of [...$('periods').querySelectorAll('.period')].entries()){
+   const span=list[i];if(!span)continue;let btn=q('.mobile-period-toggle',p);
+   if(!btn){btn=make('button','mobile-period-toggle','<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9db0ff" stroke-width="1.7">'+icons.calendar+'</svg><span class="mobile-period-text"><strong></strong><small></small></span><span class="mobile-chevron" aria-hidden="true">›</span>');btn.type='button';btn.addEventListener('click',()=>{opened=opened===i?-1:i;refreshPeriods()});q('.period-top',p).prepend(btn)}
+   const r=api.resolve(span);q('strong',btn).textContent=r.error?'Отпуск № '+(i+1):api.dateText(r.s)+' — '+api.dateText(r.e);
+   const type={auto:'Авто',main:'Основной',extra:'Дополнительный'}[span.type]||'Авто';
+   q('small',btn).textContent=type+(span.locked?' · Закреплён':'')+(r.error?' · Проверь даты':(' · '+(q('.holiday-extension',p)?.textContent.split(' · ')[1]||'Даты указаны')));
+   p.classList.toggle('mobile-period-open',opened===i);btn.setAttribute('aria-expanded',String(opened===i));q('.mobile-chevron',btn).textContent=opened===i?'⌃':'›';
+  }
+ }
+ function refresh(){if(!enabled)return;const s=api.summary();if(year!==s.year){year=s.year;opened=-1;setMonth(year===new Date().getFullYear()?new Date().getMonth():0)}
+  $('mobile-budget-value').textContent=s.error?'—':`${s.total-s.paid} / ${s.total}`;$('mobile-budget-note').textContent=s.error?'Проверь даты отпусков.':$('budget-status').textContent.split('. Всего отдыха')[0];
+  q('i',moneyCard).style.width=(s.error||!s.total?0:Math.min(100,Math.max(0,s.paid/s.total*100)))+'%';
+  $('mobile-salary-label').textContent='Моя зарплата · '+(s.mode==='gross'?'до НДФЛ':'на руки');$('mobile-salary-value').textContent=api.money(s.salary);
+  const labels=[null,'Рабочие дни','Отпускные','Зарплата','Всего','Разница'];for(const tr of $('breakdown').querySelectorAll('tbody tr'))[...tr.cells].forEach((td,i)=>{if(labels[i])td.dataset.mobileLabel=labels[i]});refreshPeriods();
+ }
+ nav.addEventListener('click',e=>{const b=e.target.closest('[data-mobile-nav]');if(b)show(b.dataset.mobileNav)});
+ for(const [n,target] of [[calNav,'calendar'],[planNav,'plan'],[moreNav,'more'],[docNav,'more']])n.addEventListener('click',e=>{const b=e.target.closest('[data-mobile-sub]');if(b)show(target,b.dataset.mobileSub)});
+ details.addEventListener('click',()=>toggleDetails(!root.classList.contains('mobile-details')));salaryButton.addEventListener('click',()=>toggleSalary(!root.classList.contains('mobile-salary-open')));
+ monthNav.addEventListener('click',e=>{const b=e.target.closest('[data-month-step]');if(b)setMonth(month+Number(b.dataset.monthStep))});monthSelect.addEventListener('change',()=>setMonth(monthSelect.value));
+ $('calendar').addEventListener('click',e=>{const b=e.target.closest('[data-cal-date]');if(enabled&&b)tip.textContent=b.title});$('cal-clear').addEventListener('click',()=>setMonth(month));$('cal-days').addEventListener('change',()=>setMonth(month));
+ $('cal-add').addEventListener('click',()=>{if(enabled&&api.periods().length)show('calc')});
+ $('add').addEventListener('click',()=>{if(!enabled)return;opened=api.periods().length-1;refreshPeriods();const p=$('periods').querySelector('.mobile-period-open');p?.scrollIntoView({block:'nearest'})});
+ $('periods').addEventListener('click',e=>{if(enabled&&e.target.closest('[data-remove]')){opened=-1;refreshPeriods()}});
+ q('.salary-mode').addEventListener('click',refresh);
+ $('recommendations').addEventListener('click',e=>{const b=e.target.closest('[data-reco]');if(enabled&&b)show(b.dataset.action==='save'?'plan':'calc',b.dataset.action==='save'?'compare':undefined)});
+ document.querySelectorAll('[data-save-scenario]').forEach(b=>b.addEventListener('click',()=>{if(enabled)show('plan','compare')}));
+ $('annual-plans').addEventListener('click',e=>{if(enabled&&e.target.closest('[data-plan-save]'))show('plan','compare')});
+ const editing=()=>{const el=document.activeElement;root.classList.toggle('mobile-editing',enabled&&!!el?.matches('input:not([type=checkbox]):not([type=range]):not([type=date]), textarea'))};document.addEventListener('focusin',editing);document.addEventListener('focusout',()=>requestAnimationFrame(editing));
+ mq.addEventListener('change',updateMode);toggleDetails(false);toggleSalary(false);updateMode();
+ const calcExpanded=()=>opened>=0||root.classList.contains('mobile-salary-open')||root.classList.contains('mobile-details');
+ return {onTab,refresh,activeTab:()=>enabled&&(screen!=='calc'||calcExpanded())?'mobile-secondary':activeTab(),back:()=>{if(!enabled)return false;if(screen==='calc'){const el=document.activeElement;if(el?.matches('input,textarea,select')){el.blur();return true}if(opened>=0){opened=-1;refreshPeriods();return true}if(root.classList.contains('mobile-salary-open')){toggleSalary(false);return true}if(root.classList.contains('mobile-details')){toggleDetails(false);return true}return false;}if(screen==='more'&&sub!=='options'){show('more','options');return true}if(screen==='calendar'&&sub!=='month'){show('calendar','month');return true}if(screen==='plan'&&sub==='compare'){show('plan','annual');return true}show('calc');return true}};
+}
+// MOBILE_UI_END
+
 // NATIVE_BACK_START
 function createVacationBackHandler(ui){
  let exiting=false;
