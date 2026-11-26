@@ -1,0 +1,14 @@
+{
+  "appId": "io.github.mragasferon.vacationplus.preview",
+  "appName": "Отпуск × деньги (тест)",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#0b1020",
+    "adjustMarginsForEdgeToEdge": "force"
+  },
+  "server": {
+    "hostname": "localhost",
+    "androidScheme": "https",
+    "cleartext": false
+  }
+}
