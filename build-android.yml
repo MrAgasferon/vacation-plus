@@ -1,0 +1,111 @@
+name: Build Android APK (preview)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'www/**'
+      - 'tests/**'
+      - 'scripts/prepare-android.py'
+      - 'android-src/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'capacitor.config.json'
+      - '.github/workflows/build-android.yml'
+permissions:
+  contents: read
+concurrency:
+  group: android-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run regression tests
+        run: npm test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;35.0.0'
+      - name: Install pinned Capacitor dependencies
+        run: |
+          if [ ! -f package-lock.json ] || ! node -e 'const a=require("./package.json"), b=require("./package-lock.json").packages?.[""]; if(!b || Object.entries({...a.dependencies,...a.devDependencies}).some(([k,v]) => (b.dependencies?.[k] ?? b.devDependencies?.[k]) !== v)) process.exit(1)'; then
+            npm install --package-lock-only --no-audit --no-fund
+          fi
+          npm ci --no-audit --no-fund
+          npm ls @capacitor/core @capacitor/android @capacitor/cli @capacitor/preferences @capacitor/app
+      - name: Save npm lockfile for reproducible future builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-npm-lock
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Install Pillow for Android icons
+        run: |
+          python3 -m venv "$RUNNER_TEMP/vacation-assets"
+          "$RUNNER_TEMP/vacation-assets/bin/pip" install Pillow==11.3.0
+      - name: Generate Android project from current web source
+        run: |
+          npm run android:add
+          npm run android:sync
+          "$RUNNER_TEMP/vacation-assets/bin/python" scripts/prepare-android.py "$GITHUB_RUN_NUMBER"
+          cmp www/index.html android/app/src/main/assets/public/index.html
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Assemble debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleDebug
+      - name: Verify signature and bundled offline assets
+        run: |
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump badging "$APK" > "$RUNNER_TEMP/vacation-badging.txt"
+          cat "$RUNNER_TEMP/vacation-badging.txt"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump resources "$APK" > "$RUNNER_TEMP/vacation-resources.txt"
+          python3 - <<'PY'
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+          import os
+          ns = '{http://schemas.android.com/apk/res/android}'
+          app = ET.parse('android/app/src/main/AndroidManifest.xml').getroot().find('application')
+          assert app.get(ns+'icon') == '@mipmap/vacation_launcher'
+          assert app.get(ns+'roundIcon') == '@mipmap/vacation_launcher_round'
+          resources = (Path(os.environ['RUNNER_TEMP'])/'vacation-resources.txt').read_text()
+          for name in ('vacation_launcher','vacation_launcher_round','vacation_launcher_foreground'):
+              assert 'mipmap/'+name in resources, f'Missing compiled icon resource: {name}'
+          print('Custom launcher resources present in compiled APK')
+          PY
+          mkdir -p output
+          cp "$APK" output/vacation-plus-preview.apk
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import json
+          with ZipFile('output/vacation-plus-preview.apk') as apk:
+              for path in Path('www').rglob('*'):
+                  if path.is_file():
+                      name = 'assets/public/' + path.relative_to('www').as_posix()
+                      assert apk.read(name) == path.read_bytes(), f'Asset mismatch: {name}'
+              config = json.loads(apk.read('assets/capacitor.config.json'))
+              assert config['appId'] == 'io.github.mragasferon.vacationplus.preview'
+              assert not config.get('server', {}).get('url'), 'Remote URL must not be configured'
+          print('All bundled web assets verified; no remote app URL')
+          PY
+          (cd output && sha256sum vacation-plus-preview.apk > SHA256SUMS.txt)
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: vacation-plus-android-preview-${{ github.run_number }}
+          path: output/
+          if-no-files-found: error
+          retention-days: 30
