@@ -1,5 +1,6 @@
 """Configure the generated preview only; no modification of the web source."""
 import re
+import json
 import sys
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -50,10 +51,14 @@ print(f'Android preview version 0.2.1-preview.{version}; standard backup disable
 # Native Java source is versioned; the rest of Android stays generated in CI.
 from shutil import copyfile
 from PIL import Image
-java = app / 'src/main/java/io/github/mragasferon/vacationplus/preview'
+package = json.loads((root / "capacitor.config.json").read_text(encoding="utf-8"))["appId"]
+assert package in ("io.github.mragasferon.vacationplus.preview", "io.github.mragasferon.vacationplus")
+java = app / "src/main/java" / package.replace(".", "/")
 assert (java / 'MainActivity.java').exists(), 'Unexpected package path'
 for name in ('MainActivity.java', 'VacationFilesPlugin.java'):
-    copyfile(root / 'android-src' / name, java / name)
+    source = (root / "android-src" / name).read_text(encoding="utf-8")
+    assert source.startswith("package io.github.mragasferon.vacationplus.preview;")
+    (java / name).write_text(source.replace("package io.github.mragasferon.vacationplus.preview;", f"package {package};", 1), encoding="utf-8")
 
 res = app / 'src/main/res'
 icon = Image.open(root / 'www/assets/icon-512.png').convert('RGBA')
