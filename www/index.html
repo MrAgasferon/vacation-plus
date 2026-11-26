@@ -1,0 +1,621 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c1222"><title>Отпуск × деньги — 2027</title><style>
+:root{--bg:#0b1020;--card:#141c30;--card2:#19243b;--border:#2b3750;--muted:#9aaac5;--text:#f3f7ff;--accent:#8ea4ff;--good:#64ddb5;--bad:#ff969d;--gold:#ffc883;--ring:#344665}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);background:radial-gradient(ellipse at 5% 0%,#202e55 0%,transparent 32%),radial-gradient(ellipse at 96% 4%,#183944 0%,transparent 29%),var(--bg);font:15px/1.5 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}a{color:#acbaff;text-decoration:underline;text-underline-offset:3px}a:hover{color:#d1d9ff}
+.container{max-width:1390px;margin:auto;padding:35px 28px 54px}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:30px}.eyebrow{display:flex;gap:9px;align-items:center;color:#a9c0f7;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.spark{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px #64ddb51c}.head h1{font-size:clamp(27px,3.7vw,47px);letter-spacing:-.055em;line-height:1.1;margin:11px 0 9px;font-weight:800}.head p{margin:0;color:var(--muted);max-width:690px}.year-picker{display:grid;gap:5px;flex-shrink:0}.year-picker label{color:#b3c4e9;font-size:11px;font-weight:750;letter-spacing:.07em;text-transform:uppercase}.year{border:1px solid #536083;border-radius:15px;padding:9px 38px 9px 19px;background:#202b47;color:#e8edff;font-size:27px;font-weight:800;letter-spacing:-.04em;white-space:nowrap;min-width:130px;cursor:pointer}
+.layout{display:grid;grid-template-columns:365px minmax(0,1fr);gap:21px;align-items:start}.sidebar{display:grid;gap:18px}.panel{background:linear-gradient(170deg,#172036,#11192c);border:1px solid var(--border);border-radius:21px;padding:23px;box-shadow:0 10px 32px #0409162b}.panel h2{font-size:17px;margin:0 0 16px;letter-spacing:-.02em}.field-label{display:flex;align-items:center;justify-content:space-between;color:#c6d1e9;font-size:13px;font-weight:700;margin-bottom:9px}.muted{color:var(--muted)}.small{font-size:12px;line-height:1.55}.big-input{position:relative}.big-input input{font-size:29px;font-weight:800;letter-spacing:-.025em;padding:10px 40px 11px 14px}.rub{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:#aabbe0;font-size:25px;font-weight:600}
+input,select{width:100%;border:1px solid #36445e;border-radius:12px;background:#0e1729;color:var(--text);padding:10px 12px;outline:none;min-width:0;color-scheme:dark}input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8ea4ff22}input[type=number]{appearance:textfield}input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.period{padding:13px;background:#0f182b;border:1px solid var(--border);border-radius:14px;margin:0 0 10px}.period-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px;color:#c4d1ed;font-size:12px;font-weight:750}.period-top .remove{color:#f6b7c0;border:0;background:transparent;padding:0 3px;font-size:20px;line-height:1}.period label{font-size:11px;color:var(--muted);display:block;margin-bottom:5px}.period input{font-size:12px;padding:9px 7px;letter-spacing:-.015em}.holiday-extension{margin-top:10px;padding:9px 11px;border-radius:9px;background:#173c35;border:1px solid #356f5a;color:#c0f4df;font-size:12px;line-height:1.5}.holiday-extension strong{color:#e7fff2}.btn{background:#263651;color:#ecf2ff;border:1px solid #405174;padding:10px 14px;border-radius:12px;font-weight:750;transition:.15s}.btn:hover{background:#32466a}.btn-primary{background:#a8b7ff;color:#111c38;border-color:#b4c0ff}.btn-primary:hover{background:#c2caff}.btn-soft{background:#202e46;color:#cbd7f4}.btn-full{width:100%}.budget{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:20px}.budget input{max-width:88px}.budget-sub{margin-top:8px}
+.main{display:grid;gap:18px;min-width:0}.results-card{padding:25px 27px;background:radial-gradient(ellipse at 95% 0%,#243a62 0%,transparent 48%),linear-gradient(130deg,#1a2948,#132138);border:1px solid #3d527b;border-radius:22px}.kicker{color:#bac9e6;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:800}.result-number{font-size:clamp(35px,5.5vw,58px);font-weight:850;letter-spacing:-.06em;line-height:1.14;margin:13px 0 5px;font-variant-numeric:tabular-nums}.result-number.good,.good{color:var(--good)}.result-number.bad,.bad{color:var(--bad)}.result-number.neutral{color:#e5edff}.result-description{color:#bdcce3;font-size:13px}.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:24px}.metric{background:#0b15275e;border:1px solid #3b4f71;border-radius:13px;padding:14px 12px}.metric .name{font-size:11px;color:#adbedb;margin-bottom:7px}.metric .num{font-size:clamp(14px,1.7vw,20px);font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25;overflow-wrap:anywhere}.metric .hint{font-size:11px;color:#a6b6d0;margin-top:7px}.result-footer{padding-top:15px;margin-top:16px;border-top:1px solid #466181;font-size:12px;color:#b1c2dc;display:flex;gap:16px;flex-wrap:wrap}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.pane-title h2{font-size:18px;margin:0;letter-spacing:-.025em}.pill{font-size:11px;border:1px solid #405473;background:#22324b;border-radius:100px;padding:4px 9px;color:#c7d5ee;white-space:nowrap}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:620px;font-size:13px;text-align:right}th{text-transform:uppercase;font-weight:800;letter-spacing:.06em;font-size:10px;color:#94a7c6}th,td{padding:12px 8px;border-bottom:1px solid #293750;white-space:nowrap}th:first-child,td:first-child{text-align:left;padding-left:0}th:last-child,td:last-child{padding-right:0;font-weight:800}tbody tr:last-child td{border-bottom:0}.empty{border:1px dashed #52627d;border-radius:14px;text-align:center;padding:35px 15px;color:#afbdd5}
+.months{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.month{border:1px solid #32415b;border-radius:13px;background:#121d31;padding:12px 13px}.month.best{background:linear-gradient(125deg,#16372e,#13233a);border-color:#356e60}.month-head{display:flex;justify-content:space-between;gap:6px;align-items:center;font-size:13px;font-weight:800}.month-head .count{font-size:12px;color:#b8c5df}.month .bar{height:4px;border-radius:5px;background:#34425b;overflow:hidden;margin:12px 0 9px}.month .bar i{height:100%;display:block;background:#879cce;border-radius:4px}.month.best .bar i{background:var(--good)}.month .info{color:#8f9fbb;font-size:11px}.month .price{font-size:13px;font-weight:700;color:#d2dcf2}
+.reco-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.reco-ctrl{display:flex;align-items:center;gap:8px}.reco-ctrl select{width:122px;font-size:12px}.reco-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.reco{background:#111e31;border:1px solid #34455f;border-radius:13px;padding:15px}.reco .date{font-size:13px;font-weight:800}.reco .gain{font-size:21px;font-weight:800;letter-spacing:-.025em;margin:6px 0;color:var(--good)}.reco p{font-size:11px;color:#aebdd7;margin:0 0 13px}.reco button{font-size:12px;padding:7px 10px;width:100%}
+.calendar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.cal-month{padding:13px;border:1px solid #32415a;border-radius:13px;background:#101a2d}.cal-month h3{font-size:13px;margin:0 0 9px;display:flex;align-items:center;justify-content:space-between}.cal-month h3 span{color:#91a4c3;font-size:11px;font-weight:500}.weekrow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}.weekrow span{text-align:center;font-size:10px;color:#93a5c5;margin-bottom:5px}.day{display:grid;place-items:center;height:25px;min-width:0;font-size:11px;border-radius:6px;font-variant-numeric:tabular-nums;color:#c8d5ed;position:relative}.day.weekend{color:#7e90ae}.day.holiday{color:#ffc28d;background:#61422833}.day.off{color:#cba6ef;background:#463b563d}.day.vac{background:#4568d6;color:white;font-weight:800}.day.vac-holiday{box-shadow:inset 0 0 0 2px #ffc782;background:#6e466b;color:white}.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:11px;color:#a3b3cc;margin-top:17px}.dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle;background:#4568d6}.dot.holiday{background:#d9a368}.dot.off{background:#9c7dbc}.foot{padding:15px 3px 0;color:#97a9c4;font-size:12px}.note{background:#152439;border:1px solid #334b64;border-radius:13px;padding:14px 15px;font-size:12px;color:#aebfda;margin-top:14px}.error{margin:12px 0;color:#ffc0c4;padding:11px 13px;background:#40242c;border:1px solid #7b414f;border-radius:11px;font-size:12px;display:none}.error.show{display:block}details{color:#becae0}details summary{cursor:pointer;font-weight:750;color:#d9e4ff}details p{color:#a8b7d2;font-size:12px;margin:9px 0}.how b{color:#ebf2ff}
+@media(max-width:1100px){.layout{grid-template-columns:310px minmax(0,1fr)}.panel{padding:19px}.four{grid-template-columns:repeat(2,minmax(0,1fr))}.months,.calendar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.reco-list{grid-template-columns:1fr}}
+@media(max-width:760px){.container{padding:21px 13px 35px}.head{align-items:center}.year{font-size:20px;padding:7px 12px}.head h1{font-size:30px}.head p{font-size:13px}.layout{grid-template-columns:1fr}.sidebar{grid-template-columns:1fr}.months,.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.result-number{font-size:39px}.results-card{padding:20px}.reco-list{grid-template-columns:1fr}.four{gap:7px}.metric{padding:11px 9px}.result-footer{gap:8px}.pane-title{align-items:flex-start}}
+@media(max-width:380px){.calendar-grid{grid-template-columns:1fr}.month{padding:9px}.months{gap:6px}.month-head{font-size:12px}.month .price{font-size:11px}.input-grid{gap:5px}.period input{font-size:11px}}
+@media print{body{background:#fff;color:#000}.panel,.results-card{background:#fff;color:#000;box-shadow:none}.sidebar button,.reco-list button{display:none}.layout{grid-template-columns:1fr}a{color:#000}.card{break-inside:avoid}}
+
+/* Planner 2.0 additions */
+:root{color-scheme:dark}button:disabled{opacity:.55;cursor:not-allowed}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 21px;border-bottom:1px solid var(--border);padding-bottom:13px}
+.tab{border:1px solid transparent;background:transparent;color:#b5c5e6;font-size:14px;font-weight:760;padding:11px 17px;border-radius:12px}
+.tab:hover{background:#202d47}.tab.active{color:#eef3ff;background:#263658;border-color:#475d8b}
+.view{display:none}.view.active{display:block}.main .panel{margin-bottom:18px}.main .panel:last-child{margin-bottom:0}
+.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.settings-grid .panel{margin-bottom:0}.field-row{display:grid;grid-template-columns:1fr 115px;align-items:center;gap:13px;margin:12px 0}
+.field-row label{color:#d2def3;font-size:13px}.field-row input{width:100%}.info-line{font-size:12px;color:var(--muted);line-height:1.55}
+.switch-row{display:flex;gap:10px;align-items:center;font-size:13px;color:#cedaf0;cursor:pointer;margin:12px 0}
+.switch-row input{width:18px;height:18px;accent-color:#9aafff}
+.year-tiles{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.year-tile{border:1px solid #405274;background:#131f33;border-radius:12px;padding:9px 14px;color:#e8f0ff;font-weight:800}
+.year-tile.is-hidden{opacity:.55}.year-tile.current{outline:2px solid var(--accent)}.year-tile .tiny{font-size:11px;font-weight:500;color:#a5b6d5}
+.year-add{display:flex;gap:9px;align-items:center;margin-top:16px;flex-wrap:wrap}.year-add input{max-width:115px}
+.feedback{margin:12px 0 0;font-size:12px;color:#b8cbea;line-height:1.6}.feedback.ok{color:var(--good)}.feedback.err{color:var(--bad)}
+.inline-stats{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.stats-tag{background:#22314e;border:1px solid #3d5676;color:#d9e5fb;border-radius:100px;padding:5px 10px;font-size:12px;font-weight:650}
+.type-select{margin-top:10px;display:grid;grid-template-columns:110px 1fr;align-items:center;gap:6px}.type-select label{margin:0}.type-select select{font-size:12px;padding:8px}
+.stack{display:grid;gap:10px}.strategy-bar{display:flex;gap:7px;flex-wrap:wrap}.strategy{font-size:12px;border:1px solid #44597c;border-radius:10px;padding:9px 13px;color:#c7d4ee;background:#17253c}.strategy.active{background:#34508c;border-color:#6688cc;color:#fff}
+.reco-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.reco-actions .btn{font-size:11px;padding:8px 5px}.reco .gain{font-size:19px}
+.heatmap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.heat{border:1px solid #32435f;border-radius:13px;padding:13px;min-height:120px;position:relative;background:color-mix(in srgb,var(--heat) 17%,#142037)}
+.heat .h-title{font-weight:800;font-size:13px}.heat .h-delta{font-weight:850;letter-spacing:-.03em;font-size:18px;margin:14px 0 6px}.heat .h-meta{color:#afc0df;font-size:11px}.heat .h-bar{height:4px;margin-top:10px;border-radius:4px;background:#34425e;overflow:hidden}.heat .h-bar i{display:block;background:var(--heat);height:100%;border-radius:4px}
+.compare-grid,.plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.compare-box,.plan-box{background:#101e31;border:1px solid #3a4e6b;border-radius:15px;padding:16px;min-width:0}.compare-box h3,.plan-box h3{font-size:14px;margin:0 0 7px}.compare-box .money,.plan-box .money{font-size:23px;font-weight:850;letter-spacing:-.03em;margin:10px 0}.compare-box p,.plan-box p{margin:7px 0;color:#b0c1de;font-size:12px}.compare-box button,.plan-box button{width:100%;margin-top:11px}.compare-note{color:#b2c3e0;font-size:12px;margin-top:14px}.plan-box .plan-tradeoff{color:#c0d2f4;font-size:12px;line-height:1.5;border-left:2px solid #8ea2ff;padding-left:10px;margin:10px 0 14px}
+.plan-span{border-bottom:1px solid #2d3f58;padding:7px 0;font-size:12px;color:#d7e2f7}.plan-span:last-child{border:0}.plan-span b{display:block;font-size:13px;color:#eff4ff}.plan-box.selected{border-color:#6c86d0}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.select-mini{max-width:145px;font-size:12px}
+.form-warning{margin-top:10px;color:#f2c58d;font-size:12px}.badge-sm{font-size:10px;padding:3px 8px;border-radius:30px;border:1px solid #45587b;color:#b9cbec}
+.slot-compare{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.slot-compare button{font-size:11px;padding:7px 9px}
+#tab-settings .settings-grid{align-items:start}.calendar-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.heatmap{grid-template-columns:repeat(3,minmax(0,1fr))}.compare-grid,.plan-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.tabs{gap:3px}.tab{padding:9px 11px;font-size:12px}.settings-grid{grid-template-columns:1fr}.heatmap{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-grid,.plan-grid{grid-template-columns:1fr}.year-picker{min-width:115px}.year{min-width:0}.head{gap:9px}.main .panel{margin-bottom:12px}.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){.heatmap{grid-template-columns:1fr 1fr}.heat{min-height:110px;padding:9px}.heat .h-delta{font-size:15px}.tab{padding:7px 8px}.input-grid{gap:7px}}
+
+/* User documentation: presentation only; calculation code is unchanged. */
+.tab-docs{margin-left:auto;border-color:#405174;background:#1a2940;color:#d4e1ff}
+.tab-docs.active{background:#334d78;border-color:#7796d2}
+.doc-intro{padding:25px 28px;border:1px solid #45608a;border-radius:20px;background:radial-gradient(ellipse at 95% 0%,#273c65 0%,transparent 48%),linear-gradient(130deg,#1a2948,#132138);margin-bottom:18px}
+.doc-intro .kicker{margin-bottom:7px}.doc-intro h2{font-size:clamp(24px,2.8vw,32px);letter-spacing:-.035em;line-height:1.15;margin:0 0 11px}
+.doc-intro p{margin:0;color:#c3d2eb;max-width:780px;line-height:1.7}
+.doc-section{margin:0 0 18px}.doc-section>h2{font-size:18px;letter-spacing:-.025em;margin:0 0 13px}
+.doc-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.doc-step,.doc-block{background:#111d31;border:1px solid #30415f;border-radius:15px;padding:17px 18px}
+.doc-step .doc-num{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#283e69;color:#c4d2ff;font-weight:850;font-size:13px;margin-bottom:12px}
+.doc-step h3,.doc-block h3{font-size:14px;color:#edf3ff;line-height:1.35;margin:0 0 8px}
+.doc-step p,.doc-block p{color:#b1c2df;font-size:13px;line-height:1.65;margin:0}
+.doc-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.doc-block p+p{margin-top:10px}.doc-block strong{color:#eff4ff}
+.doc-formula{background:#182943;border:1px solid #3c577c;border-radius:14px;padding:18px 20px;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-top:12px}
+.doc-formula .doc-formula-part{min-width:0}.doc-formula-label{color:#a7bbdb;font-size:12px;margin-bottom:5px}.doc-formula-number{font-weight:850;font-size:clamp(21px,2.6vw,28px);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.doc-formula .doc-formula-sign{font-size:24px;color:#aabddd;font-weight:750}
+.doc-formula p{font-size:11px;color:#b2c2da;margin:7px 0 0}
+.doc-tip{border-left:3px solid var(--accent);background:#1a2942;border-radius:0 12px 12px 0;padding:14px 17px;color:#cbd8ee;font-size:13px;line-height:1.7;margin-top:14px}
+.doc-tip strong{color:#fff}.doc-list{margin:10px 0 0;padding-left:19px;color:#b8c8e4;font-size:13px;line-height:1.8}.doc-list li+li{margin-top:5px}
+.doc-faq{display:grid;gap:9px}.doc-faq details{background:#101b2e;border:1px solid #344763;border-radius:12px;padding:13px 16px}.doc-faq summary{font-size:13px}.doc-faq details p{color:#b8c8e1;font-size:13px;line-height:1.7;margin:10px 0 1px}
+.doc-footer-note{font-size:12px;color:#9eb2d1;margin:16px 0 0}
+@media(max-width:1050px){.doc-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.tab-docs{margin-left:0}.doc-columns{grid-template-columns:1fr}.doc-steps{gap:9px}.doc-intro{padding:20px}.doc-formula{gap:8px;padding:13px}.doc-formula-number{font-size:20px}.doc-step,.doc-block{padding:14px}}
+@media(max-width:420px){.doc-steps{grid-template-columns:1fr}.doc-formula{grid-template-columns:1fr;gap:4px}.doc-formula .doc-formula-sign{font-size:17px;line-height:1}.doc-formula p{margin:3px 0 0}}
+@media print{.doc-step,.doc-block,.doc-intro,.doc-faq details{background:#fff;color:#000;border-color:#aaa}.doc-step p,.doc-block p,.doc-intro p,.doc-tip{color:#222}}
+/* Local backup / restore controls */
+.local-data-panel{grid-column:1 / -1}
+.local-data-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
+.local-data-panel .btn-danger{background:#442932;border-color:#8d5160;color:#ffc9d1}
+.local-data-panel .btn-danger:hover{background:#5c313e}
+.local-data-separator{height:1px;background:#35435f;margin:18px 0}
+.local-data-panel .storage-footnote{color:#a9bad4;font-size:12px;margin:10px 0 0}
+.local-data-panel .feedback{margin-top:13px}
+@media(max-width:560px){.local-data-actions{display:grid;grid-template-columns:1fr}.local-data-actions .btn{width:100%}}
+/* Salary type is a display preference; calculations continue using the entered amount. */
+.salary-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:12px;padding:4px;border:1px solid #394968;border-radius:13px;background:#101b30}
+.salary-mode button{font-size:12px;font-weight:750;padding:9px 6px;border-radius:9px;border:1px solid transparent;background:transparent;color:#aebedb;min-width:0}
+.salary-mode button:hover{color:#f1f5ff;background:#223150}
+.salary-mode button.active{background:#344d7b;border-color:#6e8bd3;color:#f8faff}
+.salary-hint{min-height:36px}
+
+/* Planning controls */
+.priority-control{margin:14px 0;padding:12px;border:1px solid #405274;border-radius:12px;background:#142138}
+.priority-control input[type=range]{width:100%;padding:0;accent-color:#9aafff;cursor:pointer;min-height:24px}
+.priority-control .range-labels{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#b1c2df}
+.planner-options{margin:12px 0 16px;border:1px solid #405274;border-radius:13px;padding:12px}.planner-options summary{cursor:pointer;font-weight:700}
+.month-options{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:8px 0 12px}.month-options select{padding:6px 4px;font-size:11px;width:100%;min-width:0}.month-options label{font-size:11px;color:#b9c8e2}
+.period-mode{margin:8px 0}.period-mode select{width:100%;font-size:12px;padding:8px}.period .lock-row{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:#c7d4ee}.lock-row input{width:16px;height:16px;accent-color:#9aafff}
+.cal-controls{padding:12px;border:1px solid #405274;border-radius:12px;margin-bottom:12px}.cal-controls select{width:auto;max-width:150px}.cal-controls .note{margin:8px 0}.days button.day{border:1px solid transparent;background-color:transparent;padding:0;font:inherit;font-size:11px;cursor:pointer;min-width:0;color:inherit;position:relative}.days button.day.weekend{color:#8190ad}.days button.day.holiday{color:#f6bc81}.days button.day.vac{background:#235547;color:#b7f7dd}.days button.day.vac-holiday{background:#60472f;color:#ffdbad}.days button.day.off{color:#b6a7ed}.days button.day[data-tone=good]{box-shadow:inset 0 -3px #54ba92}.days button.day[data-tone=bad]{box-shadow:inset 0 -3px #d87986}.days button.day[data-tone=neutral]{box-shadow:inset 0 -3px #8494b4}.days button.day.picked{outline:2px solid #a3b6ff;outline-offset:-2px;background:#344d7b;color:#fff}.days button.day:hover{border-color:#b4c5ff}.why{margin-top:9px;font-size:12px;color:#b9cbe7;line-height:1.5}.why summary{cursor:pointer;color:#c5d5ff;font-weight:700}.why p{margin:6px 0}.cal-legend{font-size:11px;color:#aebedb;margin:8px 0}.cal-legend .good,.cal-legend .bad{font-weight:700}
+@media(max-width:600px){.month-options{grid-template-columns:repeat(3,minmax(0,1fr))}.days button.day{font-size:10px}}
+.main{grid-template-columns:minmax(0,1fr)}.main>.panel,.sidebar,.sidebar>.panel{min-width:0}.pane-title{flex-wrap:wrap}.days button.day.vac{background:#4568d6;color:#fff}.days button.day.picked{background:#344d7b;color:#fff}.cal-shifts{font-size:12px;color:#b5c6e4;line-height:1.6;margin:8px 0 12px}
+@media(max-width:760px){.layout,.sidebar{grid-template-columns:minmax(0,1fr)}.cal-month{padding:7px}.cal-month h3{font-size:12px}.cal-month h3 span{font-size:10px}.cal-controls .reco-ctrl{flex-wrap:wrap}.input-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Embedded mode: the content must not depend on the iframe height. */
+html.vacation-embedded body{min-height:0}
+</style></head><body>
+<div class="container">
+ <header class="head">
+  <div><div class="eyebrow"><span class="spark"></span> Планировщик отпуска · Россия</div><h1>Отпуск <span style="color:#9db0ff">×</span> деньги</h1><p>Считай отпускные, сравнивай даты и планируй отпуск на целый год без сложной бухгалтерии.</p></div>
+  <div class="year-picker"><label for="year-select">Год расчёта</label><select class="year" id="year-select" aria-label="Выбрать год"></select></div>
+ </header>
+ <nav class="tabs" aria-label="Разделы"><button class="tab active" type="button" data-tab="calculator">Калькулятор</button><button class="tab" type="button" data-tab="planner">Планировщик и сравнение</button><button class="tab" type="button" data-tab="settings">Настройки</button><button class="tab tab-docs" type="button" data-tab="documentation">Документация</button></nav>
+ <section class="view active" id="tab-calculator">
+  <div class="layout"><aside class="sidebar">
+    <section class="panel"><h2>1. Твой доход</h2><label for="salary" class="field-label">Месячная зарплата, ₽ <span id="salary-type-label" class="small muted">на руки</span></label><div class="big-input"><input id="salary" type="number" min="1" max="1000000000" step="1000" value="100000" inputmode="decimal"><span class="rub">₽</span></div><div class="salary-mode" role="group" aria-label="В каком виде указана зарплата"><button type="button" data-salary-mode="net" class="active" aria-pressed="true">На руки</button><button type="button" data-salary-mode="gross" aria-pressed="false">До НДФЛ</button></div><p id="salary-hint" class="small muted salary-hint" style="margin:10px 0 0">Вводи сумму, которую получаешь на карту. Итоговые значения тоже будут приблизительно «на руки».</p></section>
+    <section class="panel"><h2>2. Даты отпуска</h2><div id="periods"></div><button id="add" type="button" class="btn btn-full btn-soft">+ Добавить отпуск</button><div id="error" class="error" role="alert"></div><div class="budget"><span style="font-size:13px;color:#c6d1e9;font-weight:700">Всего доступно</span><b id="budget-total">36 дней</b></div><div class="small muted budget-sub" id="budget-status"></div><div class="slot-compare" style="margin-top:13px"><button class="btn" type="button" data-save-scenario="B">Сохранить в B</button><button class="btn" type="button" data-save-scenario="C">Сохранить в C</button></div></section>
+    <section class="panel how"><h2>Как считаем</h2><details><summary>Формулы и допущения</summary><p><b>Отпускные</b> = введённая зарплата ÷ 29,3 × оплачиваемые календарные дни.</p><p><b>Потеря зарплаты</b> = введённая зарплата ÷ рабочие дни месяца × пропущенные рабочие дни.</p><p><b>Разница</b> = отпускные − потеря зарплаты. Сравниваем доход за затронутые месяцы, а не дату выплаты денег.</p><p>Нерабочие федеральные праздники не входят в отпуск, но обычные и перенесённые выходные входят. В каждом периоде можно выбрать ввод по датам или по числу отпускных дней: во втором случае праздники автоматически сдвигают окончание. Основной и дополнительный отпуск оплачиваются по одной формуле.</p><p>Для 6/1 используем самостоятельный календарь рабочих дней; расчёт предполагает равномерную оплату рабочих дней по окладу. Региональные праздники не учтены.</p><p>Переключатель «На руки / До НДФЛ» не пересчитывает введённую сумму, а определяет, как читать результаты. Налог отдельно не рассчитывается.</p></details></section>
+  </aside><main class="main">
+   <section class="results-card"><div class="kicker">Финансовый итог твоего отпуска · <span id="results-salary-type">на руки (приблизительно)</span></div><div class="result-number neutral" id="total-delta">—</div><div class="result-description" id="result-description">Укажи даты.</div><div class="four"><div class="metric"><div class="name">Отпускные</div><div id="vac-pay" class="num">—</div></div><div class="metric"><div class="name">Потеря оклада</div><div id="lost-pay" class="num">—</div></div><div class="metric"><div class="name">Всего с отпуском</div><div id="new-pay" class="num">—</div></div><div class="metric"><div class="name">Без отпуска</div><div id="base-pay" class="num">—</div></div></div><div class="result-footer"><span id="leave-count"></span><span id="leave-main"></span><span id="leave-extra"></span><span id="holiday-count"></span><span id="missed-count"></span></div></section>
+   <section class="panel"><div class="pane-title"><h2>Разбивка по месяцам</h2><span class="pill">Оклад + отпускные</span></div><div class="tablewrap" id="breakdown"></div><div class="note">Отпускные отнесены к месяцу самого отпуска, даже если фактическая выплата была раньше. Это сравнение заработка, не календарь поступлений на карту.</div></section>
+   <section class="panel"><div class="pane-title"><h2 id="heat-title">Тепловая карта — 2027</h2><span class="pill">Лучшие 14 дней каждого месяца</span></div><div class="heatmap" id="heatmap"></div><p class="small muted" style="margin:14px 0 0">Рассчитываем максимальную финансовую разницу для 14 оплачиваемых дней, если начать отпуск в указанном месяце. Период может продолжаться в следующем месяце.</p></section>
+   <section class="panel"><div class="reco-top"><h2 style="margin:0">Подобрать один отпуск</h2><div class="reco-ctrl"><select id="reco-days" aria-label="Дней отпуска"><option value="7">7 дней</option><option value="14" selected>14 дней</option><option value="21">21 день</option><option value="28">28 дней</option></select><button id="find-reco" class="btn btn-primary" type="button">Подобрать</button></div></div><div class="strategy-bar" style="margin:13px 0"><button class="strategy active" data-mode="money" type="button">Максимум денег</button><button class="strategy" data-mode="rest" type="button">Максимум отдыха</button><button class="strategy" data-mode="balance" type="button">Баланс</button></div><div class="priority-control" id="reco-priority-box" hidden><label for="reco-priority">Приоритет баланса · <b id="reco-priority-label">50% / 50%</b></label><input id="reco-priority" type="range" min="0" max="100" step="5" value="50"><div class="range-labels"><span>Деньги</span><span>Отдых</span></div></div><p class="small muted" id="reco-explain">Ищем даты, при которых доход с отпускными максимален.</p><div class="reco-list" id="recommendations"></div></section>
+   <section class="panel"><div class="pane-title"><h2 id="calendar-title">Производственный календарь — 2027</h2><span class="pill" id="workdays-pill">—</span></div><div class="cal-controls"><div class="row-between"><div class="reco-ctrl"><label for="cal-days" class="small muted">Подсветка старта</label><select id="cal-days"><option value="7">7 дней</option><option value="14" selected>14 дней</option><option value="21">21 день</option><option value="28">28 дней</option></select></div><button id="cal-clear" type="button" class="btn">Очистить выбор</button></div><div class="cal-legend"><span class="good">Зелёная черта — плюс</span> · <span class="bad">красная — минус</span> · серая — около нуля. Наведи на дату для суммы.</div><p class="note" id="cal-preview" aria-live="polite">Нажми на дату начала и затем окончания отпуска. Можно добавить выбранный диапазон без замены других отпусков.</p><p id="cal-shifts" class="cal-shifts" hidden></p><button id="cal-add" class="btn btn-primary" type="button" disabled>Добавить выбранный отпуск</button></div><div id="calendar" class="calendar-grid"></div><div class="legend"><span><i class="dot"></i> Отпуск</span><span><i class="dot holiday"></i> Федеральный праздник</span><span><i class="dot off"></i> Перенесённый выходной</span><span>Серые числа — обычные выходные</span></div></section>
+  </main></div>
+ </section>
+ <section class="view" id="tab-planner"><div class="stack">
+   <section class="panel"><div class="row-between"><div><h2 style="margin-bottom:5px">План на весь год</h2><p class="muted small" style="margin:0">Распределим доступные дни по нескольким отпускам. По умолчанию в плане будет хотя бы один отпуск не короче 14 дней. Праздники уже учтены в конечных датах предложений.</p></div><div class="inline-stats"><span class="stats-tag" id="planner-budget">36 дней</span><span class="stats-tag" id="planner-week">5/2</span></div></div><div class="row-between" style="margin:16px 0"><div class="reco-ctrl"><label for="plan-count" class="small muted">Количество отпусков</label><select id="plan-count" class="select-mini"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option></select></div><button id="plan-generate" type="button" class="btn btn-primary">Составить варианты</button></div><div class="priority-control"><label for="plan-priority">Приоритет баланса · <b id="plan-priority-label">50% / 50%</b></label><input id="plan-priority" type="range" min="0" max="100" step="5" value="50"><div class="range-labels"><span>Деньги</span><span>Отдых</span></div><p class="small muted" style="margin:7px 0 0">Влияет только на третий вариант. Два крайних варианта остаются для сравнения.</p></div><details class="planner-options"><summary>Пожелания и ограничения (необязательно)</summary><div class="field-row"><label for="plan-gap">Минимум свободных дней между отпусками</label><input id="plan-gap" type="number" min="0" max="365" value="4"></div><label class="switch-row"><input id="plan-min14" type="checkbox" checked>Хотя бы один отпуск от 14 оплачиваемых дней</label><p class="small muted">Исключённый месяц не может содержать ни одного дня нового отпуска. Предпочтительные месяцы — преимущество при близких результатах, не запрет других дат.</p><div id="plan-months" class="month-options"></div><p class="small muted" id="plan-lock-info"></p></details><div class="feedback" id="plan-feedback" role="status"></div><div class="plan-grid" id="annual-plans"></div><p class="compare-note">Алгоритм ищет выгодные сочетания с разными целями. Это предложения, а не обязательный график отпусков. Планировщик проверяет указанные ограничения; окончательные даты согласуй с работодателем.</p></section>
+   <section class="panel"><div class="row-between"><div><h2 style="margin-bottom:4px">Сравнение сценариев</h2><p class="muted small" style="margin:0">A — текущие даты. B и C — сохранённые варианты. Сравнивать можно и планы, предложенные алгоритмом.</p></div><button id="clear-scenarios" class="btn" type="button">Очистить B и C</button></div><div class="compare-grid" id="compare-grid" style="margin-top:15px"></div><div id="compare-diff" class="note"></div></section>
+  </div></section>
+ <section class="view" id="tab-settings"><div class="settings-grid">
+   <section class="panel"><h2>Параметры отпуска</h2><div class="field-row"><label for="leave-base">Основной отпуск, дней</label><input id="leave-base" type="number" min="0" max="365" step="1" value="28"></div><div class="field-row"><label for="leave-additional">Дополнительный отпуск, дней</label><input id="leave-additional" type="number" min="0" max="365" step="1" value="8"></div><p class="info-line">Дни двух видов учитываются отдельно. Если у периода выбран тип «Авто», сначала расходуются основные, затем дополнительные.</p><h2 style="margin-top:24px">Праздники внутри отпуска</h2><label class="switch-row"><input type="checkbox" id="holiday-auto-extend">По умолчанию вводить отпуск по количеству дней</label><p class="info-line">Для новых отпусков: по датам или по числу оплачиваемых дней (автоперенос праздников). Можно выбрать отдельно для каждого отпуска. Существующие периоды не меняются.</p><h2 style="margin-top:24px">Рабочий график</h2><div class="strategy-bar"><button class="strategy active" data-week="5" type="button">5/2 — пятидневка</button><button class="strategy" data-week="6" type="button">6/1 — шестидневка</button></div><p class="info-line">При смене графика пересчитываются рабочие дни, стоимость каждого рабочего дня, рекомендации и план.</p></section>
+   <section class="panel"><h2>Управление годами</h2><p class="info-line">Основной — 2027. Скрытие года не удаляет введённые отпуска и сценарии. Календарь для 2026 и 2027 встроен в HTML.</p><div id="year-tiles" class="year-tiles"></div><label class="switch-row"><input type="checkbox" id="auto-check" checked>Проверять новые утверждённые годы раз в 7 дней</label><div class="row-between" style="margin-top:16px"><button class="btn btn-primary" id="check-updates" type="button">↻ Проверить обновления</button><span id="last-check" class="small muted">—</span></div><div class="year-add"><label for="load-year" class="small muted">Добавить прошлый / другой год</label><input type="number" id="load-year" min="2022" max="2035" step="1" value="2025"><button class="btn" id="load-year-btn" type="button">Загрузить</button></div><div id="update-status" class="feedback" role="status" aria-live="polite">Встроенные календари доступны без сети.</div><p class="info-line" style="margin-top:15px">Источник обновлений: <a href="https://calendar.kuzyak.in/" rel="noopener" target="_blank">Calendar API</a>. Добавляем год только при наличии реквизитов принятого постановления и корректного набора переносов. При ограничениях CORS автоматическая загрузка может быть недоступна даже на GitHub Pages; встроенные годы продолжат работать офлайн.</p></section>
+   <section class="panel local-data-panel" aria-labelledby="local-data-title">
+    <h2 id="local-data-title">Локальные данные</h2>
+    <p class="info-line">Оклад, отпуска, варианты планов, настройки (включая автоперенос праздников) и загруженные календари хранятся только в этом браузере. Здесь можно сохранить копию, перенести её на другое устройство или начать заново.</p>
+    <div class="local-data-actions">
+     <button class="btn btn-primary" type="button" id="export-data">↓ Экспорт в JSON</button>
+     <button class="btn" type="button" id="import-data">↑ Импорт из JSON</button>
+     <input type="file" id="import-file" accept=".json,application/json" hidden aria-label="Выбрать файл с данными калькулятора">
+    </div>
+    <p class="storage-footnote">Экспорт скачивает JSON-файл на компьютер, импорт восстанавливает сохранённое состояние. Импорт <b>заменяет</b> текущие настройки и отпуска после подтверждения. Файл никому не отправляется.</p>
+    <div class="local-data-separator"></div>
+    <div class="row-between"><div><strong>Сброс к исходному состоянию</strong><p class="storage-footnote">Удаляет сохранённые данные калькулятора и возвращает настройки по умолчанию. Встроенные календари 2026 и 2027 останутся доступны.</p></div><button class="btn btn-danger" type="button" id="reset-data">Сбросить данные</button></div>
+    <div class="feedback" id="storage-status" role="status" aria-live="polite">Перед сбросом рекомендуем сохранить резервную копию.</div>
+   </section>
+  </div></section>
+ <section class="view" id="tab-documentation" aria-label="Документация по калькулятору">
+   <div class="doc-intro"><div class="kicker">Краткая инструкция</div><h2>Как работает «Отпуск × деньги»</h2><p>Здесь можно понять, выгодно ли брать отпуск в выбранные даты, подобрать удобные периоды отдыха и спланировать их на год. Всё рассчитано на обычного пользователя: достаточно знать свой оклад, даты отпуска и график работы.</p></div>
+
+   <div class="doc-section"><h2>Начни с четырёх шагов</h2><div class="doc-steps">
+    <article class="doc-step"><div class="doc-num">1</div><h3>Выбери год</h3><p>Вверху страницы укажи нужный год. По умолчанию доступен 2027-й; также есть 2026-й.</p></article>
+    <article class="doc-step"><div class="doc-num">2</div><h3>Введи зарплату</h3><p>По умолчанию выбран вариант <strong>«На руки»</strong> — введи обычную сумму после налога. Если знаешь оклад до НДФЛ, переключи способ ввода.</p></article>
+    <article class="doc-step"><div class="doc-num">3</div><h3>Добавь отпуск</h3><p>Выбери даты начала и окончания. Периодов может быть несколько; дни отпуска подсчитаются сами.</p></article>
+    <article class="doc-step"><div class="doc-num">4</div><h3>Посмотри результат</h3><p>Калькулятор покажет отпускные, недополученную зарплату и общий финансовый плюс или минус.</p></article>
+   </div></div>
+
+   <section class="panel doc-section"><h2>Что означает «плюс» или «минус»</h2>
+    <div class="doc-columns">
+     <div class="doc-block"><h3>Откуда берутся деньги</h3><p>В отпускной месяц ты получаешь <strong>отпускные за календарные дни отпуска</strong> и <strong>зарплату за отработанные дни</strong>. Мы сравниваем их сумму с обычным заработком без отпуска.</p></div>
+     <div class="doc-block"><h3>Почему месяцы отличаются</h3><p>Оклад фиксированный, но рабочих дней в месяцах разное количество. Поэтому стоимость одного рабочего дня меняется, а отпускные рассчитываются примерно одинаково за каждый оплачиваемый день.</p></div>
+    </div>
+    <div class="doc-formula"><div class="doc-formula-part"><div class="doc-formula-label">Отпускные</div><div class="doc-formula-number good">47 782 ₽</div><p>Оклад 100 000 ₽, отпуск 5–18 июля 2027 года</p></div><div class="doc-formula-sign">−</div><div class="doc-formula-part"><div class="doc-formula-label">Не заработанная за отпуск зарплата</div><div class="doc-formula-number">45 455 ₽</div><p>10 пропущенных рабочих дней из 22 в июле</p></div></div>
+    <div class="doc-tip"><strong>Итог примера: +2 327 ₽.</strong> Значит, за затронутый месяц расчётный доход с отпуском чуть выше дохода без него. Это <strong>не</strong> отдельная доплата и не обещание получить эту сумму на карту сверх зарплаты.</div>
+    <p class="info-line" style="margin-top:14px">Для приближённого расчёта отпускных используется среднее число календарных дней в месяце — <strong>29,3</strong>. Предполагаем постоянный заработок и полностью отработанный расчётный период. Если отпуск затрагивает несколько месяцев, сравнение рассчитывается отдельно по каждому месяцу, затем складывается.</p><div class="doc-tip"><strong>«На руки» или «До НДФЛ»?</strong> Калькулятор не прибавляет и не вычитает налог. При выборе «На руки» он использует введённую чистую зарплату как основу и показывает ориентировочные чистые суммы. Это приближение верно, если доля налога на зарплату и отпускные сопоставима. В режиме «До НДФЛ» расчёт идёт от начисленного заработка. <strong>Сам переключатель число не переводит</strong>: при смене режима при необходимости поменяй и сумму зарплаты.</div>
+   </section>
+
+   <div class="doc-section"><h2>Как учитываются дни отпуска</h2><div class="doc-columns">
+    <div class="doc-block"><h3>Выходные и праздники</h3><p>Обычные субботы и воскресенья, попавшие внутрь отпуска, <strong>расходуют дни отпуска и оплачиваются</strong>. Официальные федеральные нерабочие праздничные дни — <strong>не расходуют</strong>. Перенесённый выходной сам по себе праздником не считается.</p></div>
+    <div class="doc-block"><h3>Основной и дополнительный</h3><p>В настройках можно указать, например, <strong>28 основных + 8 дополнительных</strong> дней. Для каждого отпуска можно выбрать вид. В режиме «Авто» сначала расходуется остаток основных дней, потом дополнительных.</p></div>
+   </div><div class="doc-tip"><strong>Два способа ввода:</strong> по датам 7–20 июня 2027 получится 13 оплачиваемых дней; по количеству дней, с 7 июня на 14 дней, окончание будет 21 июня. Федеральные праздники не расходуют отпуск, обычные и перенесённые выходные — расходуют. Настройка определяет только режим новых отпусков. Старые планы сохраняют прежний смысл. Один период пока не может пересекать Новый год.
+</div></div>
+
+   <div class="doc-section"><h2>Помощь в выборе дат</h2><div class="doc-columns">
+    <div class="doc-block"><h3>Тепловая карта месяцев</h3><p>Для каждого месяца ищется наиболее выгодный <strong>14-дневный оплачиваемый отпуск</strong>, начинающийся в этом месяце. Зелёные значения означают расчётный плюс, красные — минус. Период может закончиться уже в следующем месяце.</p></div>
+    <div class="doc-block"><h3>Подобрать один отпуск</h3><p>Выбери 7, 14, 21 или 28 дней, затем стратегию. Калькулятор предложит подходящие даты и покажет, сколько удаётся отдыхать подряд с учётом соседних выходных и праздников.</p></div>
+   </div><div class="doc-columns" style="margin-top:12px">
+    <div class="doc-block"><h3>Максимум денег</h3><p>В первую очередь ищем даты с наиболее высокой финансовой разницей.</p></div>
+    <div class="doc-block"><h3>Максимум отдыха и баланс</h3><p><strong>Максимум отдыха</strong> ориентируется на длинный непрерывный отдых. <strong>Баланс</strong> сравнивает денежную выгоду и дополнительные дни отдыха в одинаковом масштабе и ищет промежуточный вариант между двумя крайними стратегиями. Ползунком можно менять приоритет денег и отдыха. Это не среднее арифметическое сумм: результат зависит от реально доступных дат. Если промежуточного варианта нет, один из крайних может оказаться лучшим.</p></div>
+   </div></div>
+
+   <section class="panel doc-section"><h2>Планировщик и сравнение вариантов</h2>
+    <p class="info-line">Во вкладке «Планировщик и сравнение» можно автоматически распределить доступные дни на <strong>2, 3 или 4 отпуска</strong>. Для каждого варианта система подбирает даты по одной из трёх стратегий. По умолчанию предусмотрен хотя бы один отпуск от 14 оплачиваемых дней. В пожеланиях можно изменить это условие, минимальный интервал и месяцы. Исключения действуют на новые периоды, а согласованные закрепляются в калькуляторе. Предпочтительные месяцы служат небольшим преимуществом при близких результатах.</p>
+    <ul class="doc-list"><li><strong>Применить план</strong> — заменить текущие периоды отпуска предложенными датами.</li><li><strong>Сохранить вариант</strong> — отложить его для сравнения, не изменяя текущий отпуск.</li><li><strong>Сценарий A</strong> — твой текущий план; <strong>B и C</strong> — два варианта, которые можно сохранить и сопоставить с ним.</li></ul>
+    <div class="doc-tip">Подбор — это рекомендация по числам, а не гарантированное согласование отпуска с работодателем. Учитывай собственные планы, график отпусков и фактические остатки дней.</div>
+   </section>
+
+   <div class="doc-section"><h2>Годы, график и обновление календарей</h2><div class="doc-columns">
+    <div class="doc-block"><h3>Год и рабочая неделя</h3><p>В настройках можно скрыть ненужные годы и переключить график с <strong>5/2</strong> на <strong>6/1</strong>. Выбор графика меняет количество рабочих дней и финансовые расчёты. Скрытые годы не удаляются вместе с отпусками.</p></div>
+    <div class="doc-block"><h3>Как появляются новые годы</h3><p>Календари <strong>2026 и 2027</strong> уже встроены и работают без интернета. Новые годы можно загрузить кнопкой «Проверить обновления» или автоматически, примерно раз в 7 дней. Калькулятор принимает только данные с реквизитами утверждённого постановления.</p></div>
+   </div><p class="info-line" style="margin-top:12px">Обновление требует интернета и зависит от доступности внешнего календарного сервиса. Если браузер блокирует запрос, встроенные календари остаются доступными. Ранее добавленные годы сохраняются в этом браузере.</p></div>
+
+   <section class="panel doc-section"><h2>Как сохранить или перенести данные</h2>
+    <div class="doc-columns">
+     <div class="doc-block"><h3>Экспорт и импорт JSON</h3><p>Открой «Настройки» → «Локальные данные». Кнопка «Экспорт в JSON» сохранит файл с окладом, отпусками, сценариями, настройками и загруженными календарями. На другом устройстве открой этот же калькулятор и нажми «Импорт из JSON». После подтверждения все сохранённые данные восстановятся.</p></div>
+     <div class="doc-block"><h3>Сброс данных</h3><p>Кнопка «Сбросить данные» вернёт калькулятор к первоначальным настройкам. Пропадут собственные отпуска, сценарии и загруженные годы; встроенные 2026 и 2027 останутся. Перед сбросом можно сделать экспорт. Сброс нужно подтвердить.</p></div>
+    </div>
+    <div class="doc-tip">Резервная копия может содержать размер твоей зарплаты и даты отпусков. Храни JSON в подходящем месте и не отправляй посторонним.</div>
+   </section>
+
+   <section class="panel doc-section"><h2>Частые вопросы</h2><div class="doc-faq">
+    <details><summary>Почему результат отличается от расчётного листка?</summary><p>Это ориентировочный калькулятор. Он не учитывает премии, неполностью отработанные месяцы, больничные, изменение зарплаты и другие особенности среднего заработка. НДФЛ отдельно не рассчитывается, поэтому результат «на руки» приближённый.</p></details>
+    <details><summary>Когда именно придут отпускные?</summary><p>Калькулятор сравнивает заработок, а не даты фактических выплат. Отпускные могут поступить до начала отпуска, поэтому сумма за конкретный месяц на карте может отличаться от показанной.</p></details>
+    <details><summary>Почему праздник не списался из отпуска?</summary><p>Федеральные нерабочие праздничные дни не входят в число календарных дней ежегодного оплачиваемого отпуска. Обычные выходные, включая перенесённые дни отдыха, входят.</p></details>
+    <details><summary>Сохранятся ли мои данные?</summary><p>Оклад, отпуска, сценарии и настройки сохраняются локально в браузере. В другом браузере или на другом устройстве они автоматически не синхронизируются, но можно перенести их через экспорт и импорт JSON. Очистка данных сайта или работа в приватном режиме может удалить сохранённое.</p></details>
+    <details><summary>Учитываются ли региональные праздники и сменный график?</summary><p>Нет. Используется федеральный календарь России и обычные графики 5/2 либо 6/1. Для региональных нерабочих дней и индивидуальных смен результат может отличаться.</p></details>
+   </div><section class="panel doc-section"><h2>Интерактивный календарь и объяснения</h2><p class="info-line">Цветная черта у даты показывает финансовый результат отпуска заданной длительности, начинающегося в этот день. Наведи курсор, чтобы увидеть сумму. Нажми на начало и конец, проверь результат и добавь диапазон к текущим отпускам. В рекомендациях и годовых планах раскрой «Почему этот вариант?» — там отпускные, потери зарплаты, месячные нормы и дополнительные дни отдыха. Годовой план ищет допустимые сочетания для сбалансированных длин отпусков; не перебирает все возможные распределения длительностей.</p></section><p class="doc-footer-note">Если нужен быстрый расчёт, достаточно вкладки «Калькулятор». Остальные разделы помогают сравнить и выбрать подходящие даты.</p></section>
+ </section>
+ <footer class="foot">Источники календарей: <a id="calendar-source" href="https://www.consultant.ru/law/ref/calendar/proizvodstvennye/2027/" target="_blank" rel="noopener">КонсультантПлюс</a> · <a id="decree-source" href="https://www.consultant.ru/document/cons_doc_LAW_544706/" target="_blank" rel="noopener">Постановление о переносах</a>. Основа расчёта: ст. 120 и 139 ТК РФ. Расчёты приблизительные, в выбранном формате зарплаты (на руки / до НДФЛ); без региональных праздников. Введённые зарплата и отпуска сохраняются только в браузере и не передаются поставщику календаря; при обновлении запрашиваются лишь общие календарные данные.</footer>
+</div>
+<script>(()=>{'use strict';
+const D=86400000, KEY='vacation-plus-v2', FED=['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04'];
+const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const SHORT=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const $=id=>document.getElementById(id), iso=t=>new Date(t).toISOString().slice(0,10), mon=t=>new Date(t).getUTCMonth();
+const stamp=(s,y)=>{if(typeof s!=='string'||!/^\d{4}-\d\d-\d\d$/.test(s)||y&&Number(s.slice(0,4))!==y)return NaN;const t=Date.parse(s+'T00:00:00Z');return Number.isFinite(t)&&iso(t)===s?t:NaN};
+const money=x=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.round(x||0))+' ₽';
+const signed=x=>(x>0?'+':x<0?'−':'')+money(Math.abs(x));
+const dateText=t=>{const v=new Date(t);return v.getUTCDate()+' '+SHORT[v.getUTCMonth()]};
+const daysIn=y=>((y%4===0&&y%100!==0)||y%400===0)?366:365;
+const baseCalendars={
+  2026:{source:'Встроенный · КонсультантПлюс',verified:true,decree:'№ 1466 от 24.09.2025',decreeUrl:'https://www.consultant.ru/document/cons_doc_LAW_515170/',transfers:[['2026-01-03','2026-01-09'],['2026-01-04','2026-12-31']],expected5:[15,19,21,22,19,21,23,21,22,22,20,22],expected6:[20,23,25,26,24,25,27,26,26,27,24,26]},
+  2027:{source:'Встроенный · КонсультантПлюс',verified:true,decree:'№ 1187 от 17.09.2026',decreeUrl:'https://www.consultant.ru/document/cons_doc_LAW_544706/',transfers:[['2027-01-02','2027-11-05'],['2027-01-03','2027-12-31'],['2027-02-20','2027-02-22']],expected5:[15,19,22,22,19,21,22,22,22,21,20,22],expected6:[19,23,26,26,24,25,27,26,26,26,25,26]}
+};
+const initial={year:2027,salary:100000,salaryMode:'net',base:28,additional:8,week:5,auto:true,autoHolidays:false,hidden:[],years:{},periods:{},scenarios:{},lastCheck:0,priority:50,plannerPrefs:{}};
+function storeGet(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+const oldShare=(()=>{try{return JSON.parse(localStorage.getItem('vacation-calc-shared')||'null')}catch(e){return null}})();
+const raw=storeGet()||{};const state={...initial,...raw};
+if(state.salaryMode!=='gross')state.salaryMode='net'; // Backwards-compatible default for existing saved data.
+if(typeof state.autoHolidays!=='boolean')state.autoHolidays=false;
+state.years={...(raw.years||{}),...baseCalendars};
+if(oldShare&&!(raw.salary>0)&&Number(oldShare.salary)>0)state.salary=Number(oldShare.salary);
+for(const y of [2026,2027]){if(!Array.isArray(state.periods[y])){let old=null;try{old=JSON.parse(localStorage.getItem(`vacation-calc-${y}`)||'null')}catch(e){}state.periods[y]=Array.isArray(old?.periods)?old.periods.map(p=>({...p,type:'auto'})):y===2027?[{start:'2027-07-05',end:'2027-07-18',type:'auto'}]:[{start:'2026-07-06',end:'2026-07-19',type:'auto'}]}}
+state.hidden=Array.isArray(state.hidden)?state.hidden:[];state.scenarios=state.scenarios||{};if(!state.years[state.year]||state.hidden.includes(state.year)){state.year=2027;state.hidden=state.hidden.filter(y=>y!==2027)}
+function normalizePrefs(x){return {count:[2,3,4].includes(x?.count)?x.count:3,gap:Number.isInteger(x?.gap)&&x.gap>=0&&x.gap<=365?x.gap:4,min14:x?.min14!==false,months:Array.from({length:12},(_,i)=>['prefer','exclude'].includes(x?.months?.[i])?x.months[i]:'any')}}
+function migrateSpan(p,auto=state.autoHolidays){if(p.inputMode==='days'||p.inputMode==='dates')return p;return {...p,inputMode:!p.fixedDates&&auto?'days':'dates',...(!p.fixedDates&&auto?{duration:Math.max(1,Math.round((stamp(p.end)-stamp(p.start))/D)+1)}:{})}}
+for(const [y,arr] of Object.entries(state.periods))if(Array.isArray(arr))state.periods[y]=arr.map(p=>migrateSpan(p));
+for(const slots of Object.values(state.scenarios))for(const k of ['B','C'])if(Array.isArray(slots[k]))slots[k]=slots[k].map(p=>migrateSpan(p));
+state.priority=Number.isInteger(state.priority)&&state.priority>=0&&state.priority<=100?state.priority:50;
+state.plannerPrefs=state.plannerPrefs&&typeof state.plannerPrefs==='object'?state.plannerPrefs:{};
+function prefs(){return state.plannerPrefs[state.year]||(state.plannerPrefs[state.year]=normalizePrefs(null))}
+let calSelection=[],calLastSeen=new Set(),lastPlanPool=null;
+let mode='money' , suggestions=[], annualPlans=[];let calendar=null,counts=[],allCandidates=new Map();
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){setFeedback('Хранилище браузера переполнено или недоступно. Изменения могут не сохраниться.','err')}}
+function datesOfYear(y){let list=[];for(let t=Date.UTC(y,0,1),end=Date.UTC(y+1,0,1);t<end;t+=D)list.push(t);return list}
+function getCalendar(y,week){const c=state.years[y];if(!c)throw Error('Нет календаря на '+y);
+ const h=new Set(FED.map(x=>y+'-'+x)),gov5=new Set(),gov6=new Set(),work5=new Set(),sources5=new Set(),sources6=new Set();
+ for(const [src,dst] of c.transfers||[]){if(!src.startsWith(y+'-')||!dst.startsWith(y+'-'))continue;const v=stamp(src);if(!Number.isFinite(v))continue;gov5.add(dst);sources5.add(src);if(new Date(v).getUTCDay()===0){gov6.add(dst);sources6.add(src)}if(!h.has(src)&&new Date(v).getUTCDay()===6)work5.add(src)}
+ // Article 112: a Sunday/Saturday public holiday outside 1–8 January moves the day off.
+ const automatic=new Set(),basicWeekend=t=>{const d=new Date(t).getUTCDay();return d===0||(week===5&&d===6)};
+ const govt=week===5?gov5:gov6;
+ for(const x of FED){const d=stamp(y+'-'+x);if(x.startsWith('01-')||!basicWeekend(d)||(week===5?sources5:sources6).has(iso(d)))continue;let t=d+D;for(let i=0;i<20;i++,t+=D){const k=iso(t);if(!basicWeekend(t)&&!h.has(k)&&!govt.has(k)&&!automatic.has(k)){automatic.add(k);break}}}
+ const extra=new Set([...govt,...automatic]);
+ const work=t=>{const k=iso(t),w=new Date(t).getUTCDay();if(h.has(k)||extra.has(k))return false;if(week===5)return work5.has(k)||(w>0&&w<6);return w!==0};
+ const monthly=Array.from({length:12},()=>0);for(const t of datesOfYear(y))if(work(t))monthly[mon(t)]++;
+ return {year:y,week,h,extra,work5,work,holiday:t=>h.has(iso(t)),off:t=>extra.has(iso(t)),monthly,yearDays:daysIn(y)};
+}
+function loadCalendar(){calendar=getCalendar(state.year,state.week);counts=calendar.monthly;allCandidates.clear();const c=state.years[state.year],need=state.week===5?c.expected5:c.expected6;
+ if(Array.isArray(need)&&need.join()!==counts.join())console.warn('Календарь отличается от эталона:',state.year,state.week,counts,need);
+}
+function current(){return state.periods[state.year]||[]};const budget=()=>Math.max(0,Number(state.base)||0)+Math.max(0,Number(state.additional)||0);
+function endForDays(s,n){const stop=Date.UTC(state.year+1,0,1);if(!Number.isInteger(n)||n<1||n>366)return NaN;let e=s-D;while(n>0){e+=D;if(e>=stop)return NaN;if(!calendar.holiday(e))n--}return e}
+function resolvePeriod(span){
+ const s=stamp(span.start,state.year),nominal=stamp(span.end,state.year);if(!Number.isFinite(s))return {error:`Даты отпуска должны быть внутри ${state.year} года.`};
+ const p=migrateSpan(span);
+ if(p.inputMode==='days'){const e=endForDays(s,Number(p.duration));if(!Number.isFinite(e))return {error:`Число дней некорректно или отпуск выходит за пределы ${state.year} года.`};return {s,e,shifted:(e-s)/D+1-Number(p.duration)}}
+ if(!Number.isFinite(nominal))return {error:`Даты отпуска должны быть внутри ${state.year} года.`};if(s>nominal)return {error:'Окончание отпуска раньше начала.'};return {s,e:nominal,shifted:0};
+}
+
+function compute(spans, salary=Number(state.salary)){
+ if(!Number.isFinite(salary)||salary<=0)return {error:'Укажи положительный оклад.'};
+ const seen=new Set(),rows=new Map(),list=[];let paid=0,holidays=0,missed=0,all=0;
+ for(const span of spans){const resolved=resolvePeriod(span);if(resolved.error)return {error:resolved.error};const {s,e,shifted}=resolved;
+ let thisPaid=0,thisHolidays=0,thisMissed=0;for(let t=s;t<=e;t+=D){const k=iso(t);if(seen.has(k))return {error:'Выбранные отпуска пересекаются.'};seen.add(k);all++;const m=mon(t);if(!rows.has(m))rows.set(m,{m,paid:0,holidays:0,missed:0});const r=rows.get(m);
+ if(calendar.holiday(t)){holidays++;thisHolidays++;r.holidays++}else{paid++;thisPaid++;r.paid++;if(calendar.work(t)){missed++;thisMissed++;r.missed++}}}
+ list.push({...span,paid:thisPaid,holidays:thisHolidays,missed:thisMissed,calendarDays:Math.round((e-s)/D)+1,effectiveEnd:iso(e),autoShift:shifted});}
+ // Explicit allocations take precedence; automatic days use the remaining main balance first.
+ const explicitlyMain=list.filter(x=>x.type==='main').reduce((a,x)=>a+x.paid,0),explicitlyExtra=list.filter(x=>x.type==='extra').reduce((a,x)=>a+x.paid,0);
+ let main=Math.max(0,explicitlyMain),extra=Math.max(0,explicitlyExtra),mainFree=Math.max(0,(Number(state.base)||0)-main);
+ for(const x of list)if(x.type!=='main'&&x.type!=='extra'){const v=Math.min(mainFree,x.paid);main+=v;mainFree-=v;extra+=x.paid-v}
+ const items=[...rows.values()].sort((a,b)=>a.m-b.m).map(r=>{const lost=salary*r.missed/counts[r.m],vacation=salary/29.3*r.paid;return {...r,lost,vacation,actual:salary-lost+vacation,delta:vacation-lost}});
+ const sum=k=>items.reduce((a,b)=>a+b[k],0);return {paid,holidays,missed,all,main,extra,items,list,seen,vacpay:sum('vacation'),lost:sum('lost'),actual:sum('actual'),usual:salary*items.length,delta:sum('delta'),error:null};
+}
+function validPeriod(p){return p&&typeof p.start==='string'&&typeof p.end==='string'&&['main','extra','auto'].includes(p.type||'auto')}
+function setFeedback(msg,kind=''){const x=$('update-status');x.textContent=msg;x.className='feedback '+kind}
+function setText(id,txt){$(id).textContent=txt}
+function holidayExtensionHtml(p){const r=resolvePeriod(p);if(r.error)return `<div class="holiday-extension">${r.error}</div>`;let paid=0;for(let t=r.s;t<=r.e;t+=D)if(!calendar.holiday(t))paid++;return `<div class="holiday-extension">Окончание: <strong>${dateText(r.e)} ${state.year}</strong> · ${paid} отпускных / ${(r.e-r.s)/D+1} календарных дн.${r.shifted?` · праздников: ${r.shifted}`:''}</div>`}
+function renderInputs(){const data=current();$('periods').innerHTML=data.length?data.map((p,i)=>{p=migrateSpan(p);const days=p.inputMode==='days';return `<div class="period"><div class="period-top"><span>Отпуск № ${i+1}</span><button class="remove" data-remove="${i}" type="button" title="Удалить отпуск" aria-label="Удалить отпуск ${i+1}">×</button></div><div class="period-mode"><label for="mode-${i}">Способ ввода</label><select id="mode-${i}" data-index="${i}" data-prop="inputMode"><option value="dates" ${!days?'selected':''}>По датам</option><option value="days" ${days?'selected':''}>По количеству дней</option></select></div><div class="input-grid"><div><label for="from-${i}">С даты</label><input id="from-${i}" type="date" min="${state.year}-01-01" max="${state.year}-12-31" value="${p.start}" data-index="${i}" data-prop="start"></div><div>${days?`<label for="duration-${i}">Дней отпуска</label><input id="duration-${i}" type="number" min="1" max="366" step="1" value="${p.duration}" data-index="${i}" data-prop="duration">`:`<label for="to-${i}">По дату</label><input id="to-${i}" type="date" min="${state.year}-01-01" max="${state.year}-12-31" value="${p.end}" data-index="${i}" data-prop="end">`}</div></div><div class="type-select"><label for="type-${i}">Вид отпуска</label><select id="type-${i}" data-index="${i}" data-prop="type"><option value="auto" ${!p.type||p.type==='auto'?'selected':''}>Авто</option><option value="main" ${p.type==='main'?'selected':''}>Основной</option><option value="extra" ${p.type==='extra'?'selected':''}>Дополнительный</option></select></div><label class="lock-row"><input type="checkbox" data-index="${i}" data-prop="locked" ${p.locked?'checked':''}> Закрепить в годовом плане</label>${holidayExtensionHtml(p)}</div>`}).join(''):'<div class="empty" style="padding:18px;margin-bottom:12px">Пока нет отпусков</div>'}
+
+function renderResult(){const r=compute(current());const err=r.error;$('error').classList.toggle('show',!!err);setText('error',err||'');
+ setText('budget-total',budget()+' дней');setText('planner-budget',budget()+' дней');setText('planner-week',state.week+'/'+(7-state.week));
+ if(err||!current().length){setText('total-delta','—');$('total-delta').className='result-number neutral';setText('result-description',err||'Добавь отпуск для расчёта.');['vac-pay','lost-pay','new-pay','base-pay','leave-count','leave-main','leave-extra','holiday-count','missed-count'].forEach(id=>setText(id,'—'));$('breakdown').innerHTML='<div class="empty">Нет данных для расчёта</div>';setText('budget-status','');drawCalendar(new Set());return}
+ setText('total-delta',signed(r.delta));$('total-delta').className='result-number '+(r.delta>0.5?'good':r.delta<-.5?'bad':'neutral');setText('result-description',r.delta>.5?'С отпуском заработок выше обычного.':r.delta<-.5?'С отпуском заработок ниже обычного.':'По деньгам разницы почти нет.');
+ setText('vac-pay',money(r.vacpay));setText('lost-pay',money(r.lost));setText('new-pay',money(r.actual));setText('base-pay',money(r.usual));setText('leave-count',`Отпуск: ${r.paid} дн.`);setText('leave-main',`Основной: ${r.main}/${state.base}`);setText('leave-extra',`Доп.: ${r.extra}/${state.additional}`);setText('holiday-count',`Праздников в диапазонах: ${r.holidays}`);setText('missed-count',`Пропущено рабочих: ${r.missed}`);
+ const overMain=Math.max(0,r.main-Number(state.base)),overExtra=Math.max(0,r.extra-Number(state.additional));let left=budget()-r.paid;
+ const info=overMain||overExtra?`Перерасход: основной +${overMain}, дополнительный +${overExtra}. Уточни виды отпусков.`:left<0?`Превышение лимита на ${-left} дней.`:`Осталось: основной ${Math.max(0,state.base-r.main)}, дополнительный ${Math.max(0,state.additional-r.extra)}. Всего отдыха в выбранных диапазонах: ${r.all} дн.`;
+ setText('budget-status',info);$('budget-status').style.color=overMain||overExtra||left<0?'#ffabb2':'';
+ $('breakdown').innerHTML=`<table><thead><tr><th>Месяц</th><th>Раб. дни отпуска</th><th>Отпускные</th><th>Зарплата</th><th>Всего</th><th>Разница</th></tr></thead><tbody>${r.items.map(x=>`<tr><td><b>${MONTHS[x.m]}</b><div class="small muted">${x.paid} оплач. дн.</div></td><td>${x.missed} из ${counts[x.m]}</td><td>${money(x.vacation)}</td><td>${money(state.salary-x.lost)}</td><td>${money(x.actual)}</td><td class="${x.delta>=0?'good':'bad'}">${signed(x.delta)}</td></tr>`).join('')}</tbody></table>`;
+ drawCalendar(r.seen);
+}
+function drawCalendar(seen){calLastSeen=seen;const heat=new Map(generateCandidates(Number($('cal-days').value)).map(c=>[c.span.start,c]));$('calendar').innerHTML=MONTHS.map((name,m)=>{const off=(new Date(Date.UTC(state.year,m,1)).getUTCDay()+6)%7;let cells='<span></span>'.repeat(off),n=new Date(Date.UTC(state.year,m+1,0)).getUTCDate();for(let d=1;d<=n;d++){const t=Date.UTC(state.year,m,d),k=iso(t),h=calendar.holiday(t),x=calendar.off(t),w=calendar.work(t);const cls=['day'];if(!w)cls.push('weekend');if(h)cls.push('holiday');else if(x)cls.push('off');if(seen.has(k))cls.push(h?'vac-holiday':'vac');let tip=h?'Федеральный праздник':x?'Перенесённый выходной':w?'Рабочий день':'Выходной';if(seen.has(k))tip+=' · отпуск';const c=heat.get(k);if(c)tip+=` · ${c.paid} дн. с этой даты: ${signed(c.delta)}`;if(calSelection.length&&t>=calSelection[0]&&t<=(calSelection[1]??calSelection[0]))cls.push('picked');cells+=`<button type="button" data-cal-date="${k}" class="${cls.join(' ')}" data-tone="${c?(c.delta>.5?'good':c.delta<-.5?'bad':'neutral'):''}" title="${d} ${name}: ${tip}" aria-label="${d} ${name}: ${tip}">${d}</button>`}return `<div class="cal-month"><h3>${name}<span>${counts[m]} раб.</span></h3><div class="weekrow">${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>'<span>'+x+'</span>').join('')}</div><div class="days">${cells}</div></div>`}).join('');renderCalPreview()}
+function selectedCalSpan(){return calSelection.length===2?{start:iso(calSelection[0]),end:iso(calSelection[1]),type:'auto',inputMode:'dates',fixedDates:true}:null}
+function renderCalPreview(){$('cal-shifts').hidden=true;const p=selectedCalSpan();$('cal-add').disabled=true;if(!p){setText('cal-preview',calSelection.length?`Начало: ${dateText(calSelection[0])}. Теперь выбери окончание (можно ту же дату).`:'Нажми на дату начала и затем окончания отпуска. Можно добавить диапазон без замены других отпусков.');return}const r=compute([p]),combined=compute([...current(),p]);if(r.error){setText('cal-preview',r.error);return}setText('cal-preview',`${dateText(calSelection[0])} — ${dateText(calSelection[1])}: ${r.paid} отпускных дней, ${signed(r.delta)}${combined.error?' · '+combined.error:combined.paid>budget()?' · превышение лимита дней':''}`);$('cal-add').disabled=!!combined.error||!r.paid||current().length>=25;const shifts=[-2,-1,1,2].map(n=>{const q={...p,start:iso(calSelection[0]+n*D),end:iso(calSelection[1]+n*D)},v=compute([q]);return v.error?null:`${n>0?'+':''}${n} дн.: ${signed(v.delta-r.delta)}`}).filter(Boolean);$('cal-shifts').hidden=!shifts.length;setText('cal-shifts','Если сдвинуть весь диапазон (разница к выбранному отпуску): '+shifts.join(' · '))}
+function generateCandidates(n){const cacheKey=[state.year,state.week,Number(state.salary),n].join('~');if(allCandidates.has(cacheKey))return allCandidates.get(cacheKey);const result=[],stop=Date.UTC(state.year+1,0,1),salary=Number(state.salary);if(!(salary>0)||n<1||n>365)return result;
+ for(let t=Date.UTC(state.year,0,1);t<stop;t+=D){let e=t,k=0;while(e<stop&&k<n){if(!calendar.holiday(e))k++;if(k<n)e+=D}if(k<n)continue;const span={start:iso(t),end:iso(e),type:'auto',fixedDates:true,inputMode:'dates'},r=compute([span],salary);if(r.error)continue;
+ let a=t,b=e,adj=0;while(a-D>=Date.UTC(state.year,0,1)&&!calendar.work(a-D)){a-=D;adj++}while(b+D<stop&&!calendar.work(b+D)){b+=D;adj++}result.push({span,delta:r.delta,vacpay:r.vacpay,paid:r.paid,days:r.all,rest:(b-a)/D+1,bonus:r.holidays+adj,missed:r.missed,m:mon(t)});
+ }allCandidates.set(cacheKey,result);return result}
+function weight(c,m){const scale=Math.max(1,state.salary/29.3),fin=c.delta/scale,rest=c.rest-c.paid;return m==='money'?fin+rest*.012:rest*1.6+fin*.02}
+// Money and days off have different units. Compare both on a common 0..1 scale.
+function candidateLimits(all){let minMoney=Infinity,maxMoney=-Infinity,minRest=Infinity,maxRest=-Infinity;
+ for(const c of all){minMoney=Math.min(minMoney,c.delta);maxMoney=Math.max(maxMoney,c.delta);minRest=Math.min(minRest,c.bonus);maxRest=Math.max(maxRest,c.bonus)}
+ return {minMoney,maxMoney,minRest,maxRest};}
+function normalizedCandidate(c,lim){return {money:(c.delta-lim.minMoney)/Math.max(1,lim.maxMoney-lim.minMoney),rest:(c.bonus-lim.minRest)/Math.max(1,lim.maxRest-lim.minRest)}}
+function fairScore(moneyScore,restScore,priority=state.priority){const q=priority/100;if(q===0)return moneyScore;if(q===1)return restScore;const m=1-moneyScore,r=1-restScore;return -Math.max((1-q)*m,q*r)-.04*((1-q)*m+q*r)}
+function explanation(r,bonus,reference){const monthly=r.items.map(x=>`${MONTHS[x.m]}: ${x.missed} из ${counts[x.m]} рабочих дней, ${signed(x.delta)}`).join(' · ');return `<details class="why"><summary>Почему этот вариант?</summary><p>Отпускные ${money(r.vacpay)} − потеря зарплаты ${money(r.lost)} = ${signed(r.delta)}.</p><p>${monthly}.</p><p>Праздников внутри: ${r.holidays}. Дополнительных дней отдыха с соседними выходными: ${bonus}.</p>${reference?`<p>Относительно денежного варианта: ${signed(r.delta-reference.delta)}, доп. отдых ${bonus-reference.bonus>=0?'+':''}${bonus-reference.bonus} дн.</p>`:''}</details>`}
+function syncPriority(){for(const id of ['reco','plan']){$(id+'-priority').value=state.priority;setText(id+'-priority-label',`${100-state.priority}% деньги / ${state.priority}% отдых`)}}
+function topFor(n,m,count=3){const all=generateCandidates(n).slice(),lim=m==='balance'?candidateLimits(all):null;
+ all.sort((a,b)=>{
+  if(m==='money'||m==='balance'&&state.priority===0)return b.delta-a.delta||b.bonus-a.bonus||a.span.start.localeCompare(b.span.start);
+  if(m==='rest'||m==='balance'&&state.priority===100)return b.bonus-a.bonus||b.delta-a.delta||a.span.start.localeCompare(b.span.start);
+  const sa=m==='balance'?normalizedCandidate(a,lim):null,sb=m==='balance'?normalizedCandidate(b,lim):null;
+  const scoreA=sa?fairScore(sa.money,sa.rest):weight(a,m),scoreB=sb?fairScore(sb.money,sb.rest):weight(b,m);
+  return scoreB-scoreA||a.span.start.localeCompare(b.span.start)});
+ const out=[];for(const c of all){if(out.some(x=>Math.abs(stamp(x.span.start)-stamp(c.span.start))/D<14))continue;out.push(c);if(out.length>=count)break}return out}
+function renderHeat(){setText('heat-title',`Тепловая карта — ${state.year}`);let candidates=generateCandidates(14),best=Array(12).fill(null);for(const c of candidates){const m=c.m;if(!best[m]||c.delta>best[m].delta)best[m]=c}const nums=best.filter(Boolean).map(x=>x.delta);let max=Math.max(1,...nums.map(x=>Math.abs(x)));
+ $('heatmap').innerHTML=best.map((c,m)=>{const pct=c?Math.max(6,Math.abs(c.delta)/max*100):0;const hue=c&&c.delta>=0?'#61d7ad':'#ec8c94';return `<div class="heat" style="--heat:${hue}"><div class="h-title">${MONTHS[m]}</div><div class="h-delta ${c?(c.delta>=0?'good':'bad'):''}">${c?signed(c.delta):'—'}</div><div class="h-meta">${c?dateText(stamp(c.span.start))+' — '+dateText(stamp(c.span.end)):'Нет вариантов'}</div><div class="h-bar"><i style="width:${pct}%"></i></div></div>`}).join('')}
+function renderReco(){syncPriority();$('reco-priority-box').hidden=mode!=='balance';const explain={money:'Выбираем даты с наибольшей прибавкой к заработку.',rest:'Ищем максимальный непрерывный отдых за заданное число отпускных дней, присоединяя праздники и выходные.',balance:'Уравновешиваем прибавку к заработку и дополнительные дни отдыха.'};setText('reco-explain',explain[mode]);document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode===mode));const n=Number($('reco-days').value);suggestions=topFor(n,mode);
+ $('recommendations').innerHTML=suggestions.map((c,i)=>`<div class="reco"><div class="date">${dateText(stamp(c.span.start))} — ${dateText(stamp(c.span.end))}</div><div class="gain ${c.delta>=0?'good':'bad'}">${signed(c.delta)}</div><p>${c.paid} дн. отпуска · ${c.rest} подряд с выходными · ${c.bonus} доп. дн. отдыха</p><div class="reco-actions"><button type="button" data-reco="${i}" data-action="apply" class="btn">Применить</button><button type="button" data-reco="${i}" data-action="save" class="btn">В сценарий B</button></div>${explanation(compute([c.span]),c.bonus,topFor(n,'money',1)[0])}</div>`).join('')||'<div class="muted">Нет подходящих периодов.</div>'}
+function allocateLengths(total,n,require14){if(!Number.isInteger(total)||total<0||n<0||n>4)return null;if(!n)return total===0?[]:null;if(total<n||require14&&total<14+n-1)return null;const lens=require14?[14]:[],left=total-(require14?14:0),slots=n-lens.length;if(!slots){if(left)lens[0]+=left;return lens}for(let i=0;i<slots;i++)lens.push(Math.floor(left/slots)+(i<left%slots?1:0));return lens.sort((a,b)=>b-a)}
+function spanBounds(p){const z=resolvePeriod(p);return z.error?null:{s:z.s,e:z.e}}
+function separate(a,b,gap){return a.e+D*(gap+1)<=b.s||b.e+D*(gap+1)<=a.s}
+function restStats(spans,r){const days=new Set(),start=Date.UTC(state.year,0,1),stop=Date.UTC(state.year+1,0,1);for(const p of spans){let {s,e}=spanBounds(p);while(s-D>=start&&!calendar.work(s-D))s-=D;while(e+D<stop&&!calendar.work(e+D))e+=D;for(let t=s;t<=e;t+=D)days.add(t)}return {rest:days.size,bonus:days.size-r.paid}}
+function plannerContext(){const cfg=prefs(),locked=current().filter(p=>p.locked).map(p=>({...p})),r=compute(locked);if(r.error)return {error:'Закреплённые отпуска: '+r.error};if(r.main>state.base||r.extra>state.additional||r.paid>budget())return {error:'Закреплённые отпуска превышают доступный остаток.'};if(locked.length>cfg.count)return {error:'Закреплено больше отпусков, чем выбрано в плане.'};if(r.list.some(x=>!x.paid))return {error:'Закреплённый период не содержит оплачиваемых дней.'};const fixed=locked.map(spanBounds);if(fixed.some((a,i)=>fixed.slice(i+1).some(b=>!separate(a,b,cfg.gap))))return {error:'Закреплённые отпуска нарушают минимальный промежуток.'};const require14=cfg.min14&&!r.list.some(x=>x.paid>=14),lengths=allocateLengths(budget()-r.paid,cfg.count-locked.length,require14);if(!lengths||require14&&!lengths.some(n=>n>=14))return {error:'Недостаточно дней или свободных периодов для выбранных условий.'};const start=Date.UTC(state.year,0,1),days=daysIn(state.year),groups=lengths.map(n=>{const available=generateCandidates(n).filter(c=>{const a=spanBounds(c.span);if(!fixed.every(b=>separate(a,b,cfg.gap)))return false;for(let t=a.s;t<=a.e;t+=D)if(cfg.months[mon(t)]==='exclude')return false;return true});const lim=candidateLimits(available),byDay=new Map();for(const c of available){const v=normalizedCandidate(c,lim),a=spanBounds(c.span),i=(a.s-start)/D,j=(a.e-start)/D;byDay.set(i,{c,money:v.money,rest:v.rest,end:j,prefer:cfg.months[c.m]==='prefer'?1:0})}return {byDay}});if(groups.some(g=>!g.byDay.size))return {error:'Нет доступных дат для одного из отпусков. Ослабь ограничения.'};return {cfg,locked,lengths,groups,days}}
+// Exact date search for the chosen lengths. Count the union of extended rest
+// intervals, excluding days already covered by locked periods.
+function solvePlan(ctx,q){
+ const {groups,days,cfg,locked}=ctx,n=groups.length,full=(1<<n)-1,stride=days+1;
+ const start=Date.UTC(state.year,0,1),left=new Int16Array(days),right=new Int16Array(days),fixed=new Uint8Array(days),pref=new Int16Array(days+1);
+ for(let d=0;d<days;d++)left[d]=d>0&&!calendar.work(start+(d-1)*D)?left[d-1]:d;
+ for(let d=days-1;d>=0;d--)right[d]=d+1<days&&!calendar.work(start+(d+1)*D)?right[d+1]:d;
+ for(const p of locked){const z=spanBounds(p);for(let d=left[(z.s-start)/D];d<=right[(z.e-start)/D];d++)fixed[d]=1}
+ for(let d=0;d<days;d++)pref[d+1]=pref[d]+(1-fixed[d]);
+ const coverage=(a,b)=>b<a?0:pref[b+1]-pref[a],scale=Math.max(1e-9,Number(state.salary)/29.3);
+ const maxRest=Math.max(1,...groups.map(g=>Math.max(...Array.from(g.byDay.values(),x=>x.c.bonus))))*Math.max(1,n);
+ const moneyRange=Math.max(1,groups.reduce((sum,g)=>{const v=Array.from(g.byDay.values(),x=>x.c.delta/scale);return sum+Math.max(...v)-Math.min(...v)},0));
+ const primary=new Float64Array((full+1)*stride),secondary=new Float64Array(primary.length),preference=new Int16Array(primary.length),prev=new Int16Array(primary.length),chosen=new Int16Array(primary.length),group=new Int8Array(primary.length);
+ primary.fill(-Infinity);primary[0]=0;prev.fill(-1);
+ const better=(a,b,c,x,y,z)=>a>x+1e-9||(Math.abs(a-x)<=1e-9&&(b>y+1e-9||(Math.abs(b-y)<=1e-9&&c>z)));
+ for(let mask=0;mask<full;mask++){
+  const off=mask*stride, bestPrefix=new Int16Array(stride);let best=-1;
+  for(let k=0;k<stride;k++){const i=off+k;if(Number.isFinite(primary[i])&&(best<0||better(primary[i],secondary[i],preference[i],primary[off+best],secondary[off+best],preference[off+best])))best=k;bestPrefix[k]=best}
+  if(best<0)continue;
+  for(let j=0;j<n;j++){if(mask&(1<<j))continue;const dst=(mask|(1<<j))*stride;
+   for(const [d,x] of groups[j].byDay){const a=left[d],b=right[x.end],maxPrev=Math.max(0,d-cfg.gap),fin=x.c.delta/scale;
+    // k=previous last date+1; k=0 is the empty plan. Prefix max handles
+    // all earlier disjoint rest intervals; only nearby overlapping ones need individual checks.
+    let split=maxPrev;while(split>0&&right[split-1]>=a)split--;
+    const consider=k=>{if(k<0)return;const i=off+k;if(!Number.isFinite(primary[i]))return;
+     const overlap=k===0?0:coverage(a,Math.min(b,right[k-1]));
+     const rest=coverage(a,b)-overlap, v=q===0?fin:q===1?rest:(1-q)*fin/moneyRange+q*rest/maxRest;
+     const t=q===0?rest:fin, p=preference[i]+x.prefer, target=dst+x.end+1;
+     // Preferred months break exact ties at the extremes; mildly bias intermediate search.
+     const value=primary[i]+v+(q>0&&q<1?x.prefer*.005:0), tie=secondary[i]+t;
+     if(better(value,tie,p,primary[target],secondary[target],preference[target])){primary[target]=value;secondary[target]=tie;preference[target]=p;prev[target]=k;chosen[target]=d;group[target]=j}
+    };
+    consider(bestPrefix[split]);for(let k=split+1;k<=maxPrev;k++)consider(k);
+   }
+  }
+ }
+ let k=-1;const off=full*stride;for(let i=0;i<stride;i++)if(Number.isFinite(primary[off+i])&&(k<0||better(primary[off+i],secondary[off+i],preference[off+i],primary[off+k],secondary[off+k],preference[off+k])))k=i;
+ if(k<0)return null;let mask=full;const spans=locked.map(p=>({...p}));while(mask){const i=mask*stride+k,j=group[i],x=groups[j].byDay.get(chosen[i]);if(!x||prev[i]<0)return null;spans.push({...x.c.span});k=prev[i];mask^=1<<j}
+ spans.sort((a,b)=>a.start.localeCompare(b.start));const r=compute(spans);if(r.error||r.paid!==budget()||r.main>state.base||r.extra>state.additional)return null;return {spans,r,...restStats(spans,r)};
+}
+function collectPlans(){const ctx=plannerContext();if(ctx.error)return {error:ctx.error};const uniq=new Map();for(let i=0;i<=40;i++){const p=solvePlan(ctx,i/40);if(p)uniq.set(p.spans.map(s=>s.start+':'+resolvePeriod(s).e).join('|'),p)}const pool=[...uniq.values()];if(!pool.length)return {error:'Не удалось разместить отпуска с такими ограничениями. Попробуй уменьшить промежуток или число исключённых месяцев.'};const moneyPlan=pool.slice().sort((a,b)=>b.r.delta-a.r.delta||b.bonus-a.bonus)[0],restPlan=pool.slice().sort((a,b)=>b.bonus-a.bonus||b.r.delta-a.r.delta)[0];return {pool,moneyPlan,restPlan}}
+function pickBalance(pool,moneyPlan,restPlan){if(state.priority===0)return moneyPlan;if(state.priority===100)return restPlan;const minM=restPlan.r.delta,maxM=moneyPlan.r.delta,minR=moneyPlan.bonus,maxR=restPlan.bonus;const score=p=>fairScore(maxM===minM?1:(p.r.delta-minM)/(maxM-minM),maxR===minR?1:(p.bonus-minR)/(maxR-minR))+.005*p.spans.filter(s=>!s.locked&&prefs().months[mon(stamp(s.start))]==='prefer').length;return pool.slice().sort((a,b)=>score(b)-score(a)||b.r.delta-a.r.delta)[0]}
+function renderPlannerControls(){const cfg=prefs();$('plan-count').value=cfg.count;$('plan-gap').value=cfg.gap;$('plan-min14').checked=cfg.min14;$('plan-months').innerHTML=MONTHS.map((m,i)=>`<div><label for="plan-m-${i}">${m}</label><select id="plan-m-${i}" data-plan-month="${i}"><option value="any" ${cfg.months[i]==='any'?'selected':''}>Любой</option><option value="prefer" ${cfg.months[i]==='prefer'?'selected':''}>Желателен</option><option value="exclude" ${cfg.months[i]==='exclude'?'selected':''}>Исключён</option></select></div>`).join('');const locked=current().filter(p=>p.locked),r=compute(locked);setText('plan-lock-info',`Закреплено: ${locked.length} · ${r.error?'проверь даты':r.paid+' отпускных дней'}. Закрепляй согласованные периоды в калькуляторе. Они остаются неизменными, даже если месяц исключён.`);syncPriority()}
+function generatePlans(reuse=false){if(reuse!==true||!lastPlanPool)lastPlanPool=collectPlans();const result=lastPlanPool;syncPriority();if(result.error){annualPlans=[];setText('plan-feedback',result.error);$('annual-plans').innerHTML='';return}setText('plan-feedback','Поиск по допустимым датам для выбранных длительностей. Дополнительный отдых считается без повторов. Баланс — подбор из найденных вариантов; согласованные отпуска сохранены.');const {pool,moneyPlan,restPlan}=result;annualPlans=[moneyPlan,restPlan,pickBalance(pool,moneyPlan,restPlan)];const names=['Максимум денег','Максимум отдыха','Баланс'];$('annual-plans').innerHTML=annualPlans.map((x,i)=>{const diff=x.bonus-moneyPlan.bonus,cost=moneyPlan.r.delta-x.r.delta;const desc=i===2?`<p class="plan-tradeoff">${diff>0?`Доп. отдых: +${diff} дн. относительно денежного плана. Цена: ${money(cost)}.`: 'Дополнительного отдыха относительно денежного плана нет.'}${x===moneyPlan||x===restPlan?' Для выбранного приоритета подходит крайний вариант.':''}</p>`:'';return `<div class="plan-box"><h3>${names[i]}</h3><div class="money ${x.r.delta>=0?'good':'bad'}">${signed(x.r.delta)}</div><p>${x.r.paid} оплач. дн. · ${x.bonus} доп. дн. отдыха</p>${desc}${x.r.list.map(s=>`<div class="plan-span"><b>${dateText(stamp(s.start))} — ${dateText(stamp(s.effectiveEnd))}${s.locked?' · закреплён':''}</b>${s.paid} отпускных дней</div>`).join('')}${explanation(x.r,x.bonus,{delta:moneyPlan.r.delta,bonus:moneyPlan.bonus})}<button type="button" class="btn btn-primary" data-plan="${i}">Применить план</button><button type="button" class="btn" data-plan-save="${i}">Сохранить в B</button></div>`}).join('')}
+
+function setScenario(slot,spans){if(!state.scenarios[state.year])state.scenarios[state.year]={};state.scenarios[state.year][slot]=spans.map(x=>({...x}));persist();renderCompare()}
+function renderCompare(){const slots=state.scenarios[state.year]||{},plans=[['A',current()],['B',slots.B],['C',slots.C]];
+ $('compare-grid').innerHTML=plans.map(([name,spans])=>{const ready=Array.isArray(spans),r=ready?compute(spans):null;return `<div class="compare-box"><h3>Сценарий ${name} ${name==='A'?'<span class="badge-sm">Текущий</span>':''}</h3>${ready&&!r.error?`<div class="money ${r.delta>=0?'good':'bad'}">${signed(r.delta)}</div><p>${r.paid} дн. отпуска · ${r.list.length} период(ов)</p><p>Отпускные: ${money(r.vacpay)}</p><p>Пропущено рабочих: ${r.missed}</p>`:`<div class="money">—</div><p>${r?.error||'Пока не сохранён'}</p>`}${name!=='A'?`<button class="btn" ${ready?'':'disabled'} data-load-scenario="${name}" type="button">Применить ${name}</button>`:'<p>Изменяется в калькуляторе</p>'}</div>`}).join('');let a=compute(current());let comparison=['B','C'].map(s=>{const p=slots[s];if(!p||a.error)return '';const b=compute(p);return b.error?'':`${s} относительно A: ${signed(b.delta-a.delta)}`}).filter(Boolean);setText('compare-diff',comparison.length?comparison.join('  ·  '):'Сохрани вариант в B или C, чтобы увидеть разницу с текущим планом.');}
+function renderSalaryMode(){
+ const net=state.salaryMode==='net';
+ document.querySelectorAll('[data-salary-mode]').forEach(b=>{const active=b.dataset.salaryMode===state.salaryMode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ setText('salary-type-label',net?'на руки':'до НДФЛ');
+ setText('results-salary-type',net?'на руки (приблизительно)':'до НДФЛ');
+ setText('salary-hint',net?'Вводи сумму, которую получаешь на карту. Все итоговые суммы — ориентировочно «на руки»; отдельно НДФЛ не считаем.':'Вводи сумму до вычета налога. Все итоговые суммы будут до НДФЛ; налог отдельно не рассчитываем.');
+}
+function renderSettings(){renderSalaryMode();setText('planner-budget',budget()+' дней');$('salary').value=state.salary;$('leave-base').value=state.base;$('leave-additional').value=state.additional;$('auto-check').checked=state.auto;$('holiday-auto-extend').checked=state.autoHolidays;
+ document.querySelectorAll('[data-week]').forEach(x=>x.classList.toggle('active',Number(x.dataset.week)===Number(state.week)));
+ const ys=Object.keys(state.years).map(Number).sort((a,b)=>b-a);$('year-tiles').innerHTML=ys.map(y=>`<button class="year-tile ${state.hidden.includes(y)?'is-hidden':''} ${state.year===y?'current':''}" type="button" data-toggle-year="${y}"><div>${y} ${state.hidden.includes(y)?'＋':'✓'}</div><div class="tiny">${state.hidden.includes(y)?'Показать':'Скрыть'}</div></button>`).join('');$('last-check').textContent=state.lastCheck?'Последняя проверка: '+new Date(state.lastCheck).toLocaleDateString('ru-RU'):'Ещё не проверяли';}
+function renderYearSelect(){const ys=Object.keys(state.years).map(Number).filter(y=>!state.hidden.includes(y)).sort((a,b)=>b-a);$('year-select').innerHTML=ys.map(y=>`<option value="${y}" ${state.year===y?'selected':''}>${y}</option>`).join('')}
+function changeYear(y){if(!state.years[y]||state.hidden.includes(y))return;if(!Array.isArray(state.periods[y]))state.periods[y]=[];state.year=y;calSelection=[];loadCalendar();document.title=`Отпуск × деньги — ${y}`;renderYearSelect();renderInputs();renderAll();persist()}
+function renderAll(){setText('calendar-title',`Производственный календарь — ${state.year}`);setText('workdays-pill',`${counts.reduce((a,b)=>a+b,0)} рабочих дней · ${state.week}/`+(7-state.week));const c=state.years[state.year];$('calendar-source').href=`https://www.consultant.ru/law/ref/calendar/proizvodstvennye/${state.year}/`;setText('calendar-source',`Производственный календарь ${state.year}`);$('decree-source').href=c.decreeUrl||'https://www.consultant.ru/law/ref/calendar/';setText('decree-source',c.decree||'Нормативное основание');renderResult();renderHeat();renderReco();renderCompare();renderPlannerControls();generatePlans();renderSettings()}
+function switchTab(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='tab-'+id));}
+const plainISO=x=>typeof x==='string'?x.slice(0,10):x&&typeof x.date==='string'?x.date.slice(0,10):null;
+function normalizedRemote(y,json){if(!json||Number(json.year)!==y||!Array.isArray(json.holidays)||!Array.isArray(json.transferredHolidays)||!json.decree)throw Error('Источник вернул неполный календарь.');
+ const decree=json.decree,ttl=String(decree.title||''),num=String(decree.number||''),url=String(decree.url||''),d=String(decree.date||'');
+ if(!/^\d{1,5}$/.test(num)||!/^\d{4}-\d{2}-\d{2}$/.test(d)||!/^https?:\/\//.test(url)||!ttl.includes(String(y))||/проект|draft|preliminary/i.test(ttl))throw Error('У года нет подтверждённых реквизитов принятого постановления.');
+ if(json.preliminary===true||String(json.status||'').toUpperCase()==='PRELIMINARY')throw Error('Доступен только предварительный календарь.');
+ const transfers=json.transferredHolidays.map(x=>[plainISO(x.from),plainISO(x)]).filter(([from,to])=>Number.isFinite(stamp(from,y))&&Number.isFinite(stamp(to,y)));
+ // Require all government / statutory transfers to carry a verified source date.
+ if(transfers.length!==json.transferredHolidays.length)throw Error('Не все переносы имеют исходную дату.');
+ const holidays=json.holidays.map(plainISO);if(holidays.length!==FED.length||new Set(holidays).size!==FED.length||FED.some(x=>!holidays.includes(y+'-'+x)))throw Error('Список федеральных праздников отличается от ожидаемого.');
+ if(new Set(transfers.map(x=>x[0])).size!==transfers.length||new Set(transfers.map(x=>x[1])).size!==transfers.length||transfers.some(([a,b])=>a===b))throw Error('В ответе повторяются или совпадают даты переносов.');
+ const obj={verified:true,source:'Calendar API',decree:`№ ${num} от ${d.split('-').reverse().join('.')}`,decreeUrl:url,transfers};
+ const test5=getCalendarFrom(y,5,obj),test6=getCalendarFrom(y,6,obj);const total5=test5.monthly.reduce((a,b)=>a+b,0),total6=test6.monthly.reduce((a,b)=>a+b,0);
+ if(total5<225||total5>260||total6<275||total6>310)throw Error('Неправдоподобные нормы рабочих дней.');
+ return obj}
+function getCalendarFrom(y,week,c){const prev=state.years[y];state.years[y]=c;try{return getCalendar(y,week)}finally{if(prev)state.years[y]=prev;else delete state.years[y]}}
+// The index endpoint tells us which years actually exist. Query it first,
+// because the API sends 422 errors without CORS headers for unavailable years.
+async function availableCalendarYears(){
+ let response;
+ try{response=await fetch('https://calendar.kuzyak.in/api/calendar',{cache:'no-cache',signal:AbortSignal.timeout?AbortSignal.timeout(9000):undefined})}
+ catch(e){throw Error('Не удалось получить список календарей. Проверь подключение к сети.');}
+ if(!response.ok)throw Error('Не удалось получить список календарей: HTTP '+response.status+'.');
+ let data;
+ try{data=await response.json()}catch(e){throw Error('Источник вернул некорректный список календарей.');}
+ if(!data||!Array.isArray(data.years))throw Error('В ответе API отсутствует список годов.');
+ const years=[...new Set(data.years.map(Number).filter(y=>Number.isInteger(y)&&y>=2022&&y<=2035))].sort((a,b)=>a-b);
+ if(!years.length)throw Error('Источник не вернул ни одного поддерживаемого года.');
+ return years;
+}
+async function retrieveYear(y,quiet=false,confirmedAvailable=false){
+ if(!Number.isInteger(y)||y<2022||y>2035)throw Error('Можно загружать годы с 2022 по 2035.');
+ if(state.years[y]){
+  state.hidden=state.hidden.filter(n=>n!==y);renderYearSelect();renderSettings();persist();
+  if(!quiet)setFeedback(`Календарь ${y} уже загружен. Год доступен для выбора.`,'ok');
+  return y;
+ }
+ if(!confirmedAvailable){const years=await availableCalendarYears();if(!years.includes(y))throw Error(`${y} год пока отсутствует в источнике. Доступны: ${years.join(', ')}.`);}
+ const url=`https://calendar.kuzyak.in/api/calendar/${y}/holidays`;
+ let r;
+ try{r=await fetch(url,{cache:'no-cache',signal:AbortSignal.timeout?AbortSignal.timeout(9000):undefined})}
+ catch(e){throw Error(`Не удалось загрузить календарь ${y}. Проверь сеть и доступность API.`)}
+ if(r.status===404||r.status===422)throw Error(`${y} год пока не опубликован в источнике.`);
+ if(!r.ok)throw Error('Сервис вернул HTTP '+r.status);
+ let data;try{data=await r.json()}catch(e){throw Error('Некорректный JSON-ответ.')}
+ const obj=normalizedRemote(y,data);
+ state.years[y]=obj;state.hidden=state.hidden.filter(n=>n!==y);persist();
+ if(!quiet)setFeedback(`Календарь ${y} загружен и проверен по реквизитам постановления.`,'ok');
+ renderYearSelect();renderSettings();return y;
+}
+let busy=false;
+async function checkUpdates(manual=false){
+ if(busy)return;
+ busy=true;$('check-updates').disabled=true;setFeedback('Проверяем список доступных календарей…');
+ try{
+  const available=await availableCalendarYears();
+  const max=Math.max(...Object.keys(state.years).map(Number));
+  const targets=available.filter(y=>y>max);
+  const added=[],errors=[];
+  for(const y of targets){
+   try{await retrieveYear(y,true,true);added.push(y)}
+   catch(e){errors.push(`${y}: ${e.message}`)}
+  }
+  // Only a successfully retrieved index counts as a completed update check.
+  state.lastCheck=Date.now();persist();renderSettings();
+  if(added.length){
+   setFeedback(`Добавлены новые годы: ${added.join(', ')}. ${errors.length?'Не удалось загрузить: '+errors.join(' · ')+'. ':''}Текущий выбранный год не изменился.`,'ok');
+  }else if(errors.length){setFeedback('Новые годы найдены, но не загружены: '+errors.join(' · '),'err')}
+  else{setFeedback(`Новых утверждённых годов нет. В API доступны: ${available.join(', ')}. Прошлые годы можно добавить вручную.`,'ok')}
+ }catch(e){setFeedback(e.message+' Встроенные календари работают без интернета.','err')}
+ finally{busy=false;$('check-updates').disabled=false;}
+}
+function repaint(){allCandidates.clear();renderAll();persist()}
+// Local backups. This code is deliberately separate from the calculation engine.
+function storageFeedback(msg,kind=''){const el=$('storage-status');el.textContent=msg;el.className='feedback '+kind}
+function exportLocalData(){
+ try{
+  const data={app:'vacation-plus',formatVersion:1,exportedAt:new Date().toISOString(),data:state};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=`otpusk-backup-${state.year}-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+  storageFeedback('Резервная копия сформирована. Сохрани скачанный JSON-файл в надёжном месте.','ok');
+ }catch(e){storageFeedback('Не удалось создать файл: '+e.message,'err')}
+}
+function validateImportedData(payload){
+ const fail=msg=>{throw Error(msg)},isObj=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+ if(!isObj(payload)||payload.app!=='vacation-plus'||payload.formatVersion!==1||!isObj(payload.data))fail('Файл не является резервной копией этого калькулятора.');
+ const x=payload.data;
+ if(!Number.isInteger(x.year)||x.year<2022||x.year>2035)fail('Недопустимый выбранный год.');
+ if(!Number.isFinite(x.salary)||x.salary<=0||x.salary>1000000000)fail('Недопустимая зарплата.');
+ if(x.salaryMode!==undefined&&!['net','gross'].includes(x.salaryMode))fail('Некорректный способ указания зарплаты.');
+ if(!Number.isInteger(x.base)||x.base<0||x.base>365||!Number.isInteger(x.additional)||x.additional<0||x.additional>365)fail('Недопустимое количество отпускных дней.');
+ if(x.week!==5&&x.week!==6)fail('Неизвестный рабочий график.');
+ if(typeof x.auto!=='boolean')fail('Некорректная настройка автообновления.');
+ if(x.autoHolidays!==undefined&&typeof x.autoHolidays!=='boolean')fail('Некорректная настройка автопереноса праздников.');
+ if(!isObj(x.years)||!isObj(x.periods)||!isObj(x.scenarios)||!Array.isArray(x.hidden))fail('В файле не хватает разделов данных.');
+ const allYears={...baseCalendars},remoteYears=Object.keys(x.years);
+ if(remoteYears.length>14)fail('В файле слишком много календарей.');
+ for(const k of remoteYears){
+  const y=Number(k),c=x.years[k];
+  if(!/^\d{4}$/.test(k)||!Number.isInteger(y)||y<2022||y>2035||!isObj(c))fail('Некорректный календарь '+k+'.');
+  if(baseCalendars[y])continue; // Built-in years always come from the current HTML.
+  if(c.verified!==true||!Array.isArray(c.transfers)||c.transfers.length>40||typeof c.decree!=='string'||c.decree.length>300||typeof c.decreeUrl!=='string'||!/^https?:\/\//i.test(c.decreeUrl))fail('Не удалось проверить календарь '+k+'.');
+  const transfers=c.transfers.map(v=>{
+   if(!Array.isArray(v)||v.length!==2||!Number.isFinite(stamp(v[0],y))||!Number.isFinite(stamp(v[1],y)))fail('Некорректные переносы в '+k+'.');
+   return [v[0],v[1]];
+  });
+  allYears[y]={source:typeof c.source==='string'?c.source.slice(0,100):'Импорт JSON',verified:true,decree:c.decree,decreeUrl:c.decreeUrl.slice(0,500),transfers};
+ }
+ const validYears=new Set(Object.keys(allYears));
+ if(!validYears.has(String(x.year)))fail('Календарь выбранного года отсутствует.');
+ if(x.hidden.length>14||x.hidden.some(y=>!Number.isInteger(y)||!validYears.has(String(y))))fail('Некорректные скрытые годы.');
+ const hidden=[...new Set(x.hidden)];
+ if(hidden.includes(x.year))fail('Выбранный год не может быть скрыт.');
+ const validPeriod=(p,y)=>isObj(p)&&Number.isFinite(stamp(p.start,y))&&Number.isFinite(stamp(p.end,y))&&stamp(p.start,y)<=stamp(p.end,y)&&['auto','main','extra'].includes(p.type||'auto')&&(p.fixedDates===undefined||typeof p.fixedDates==='boolean')&&(p.locked===undefined||typeof p.locked==='boolean')&&(p.inputMode===undefined||['dates','days'].includes(p.inputMode))&&(p.inputMode!=='days'||Number.isInteger(p.duration)&&p.duration>=1&&p.duration<=366);
+ const convertPeriods=(input,scope)=>{
+  const out={};
+  if(Object.keys(input).length>14)fail('Слишком много годов в разделе «'+scope+'».');
+  for(const [k,arr] of Object.entries(input)){
+   const y=Number(k);
+   if(!/^\d{4}$/.test(k)||!validYears.has(k)||!Array.isArray(arr)||arr.length>25||arr.some(p=>!validPeriod(p,y)))fail('Некорректные отпуска в '+scope+' за '+k+'.');
+   out[k]=arr.map(p=>({start:p.start,end:p.end,type:p.type||'auto',...(p.fixedDates===true?{fixedDates:true}:{}),...(p.inputMode?{inputMode:p.inputMode}:{}),...(p.inputMode==='days'?{duration:p.duration}:{}),...(p.locked?{locked:true}:{})}));
+  }
+  return out;
+ };
+ const periods=convertPeriods(x.periods,'периодах');
+ const scenarios={};
+ if(Object.keys(x.scenarios).length>14)fail('Слишком много годов в сценариях.');
+ for(const [k,slots] of Object.entries(x.scenarios)){
+  if(!/^\d{4}$/.test(k)||!validYears.has(k)||!isObj(slots)||Object.keys(slots).some(slot=>!['B','C'].includes(slot)))fail('Некорректные сценарии за '+k+'.');
+  scenarios[k]={};
+  for(const slot of ['B','C'])if(Object.hasOwn(slots,slot)){
+   const arr=slots[slot],y=Number(k);
+   if(!Array.isArray(arr)||arr.length>25||arr.some(p=>!validPeriod(p,y)))fail('Некорректный сценарий '+slot+' за '+k+'.');
+   scenarios[k][slot]=arr.map(p=>({start:p.start,end:p.end,type:p.type||'auto',...(p.fixedDates===true?{fixedDates:true}:{}),...(p.inputMode?{inputMode:p.inputMode}:{}),...(p.inputMode==='days'?{duration:p.duration}:{}),...(p.locked?{locked:true}:{})}));
+  }
+ }
+ const plannerPrefs={};if(x.plannerPrefs!==undefined){if(!isObj(x.plannerPrefs)||Object.keys(x.plannerPrefs).some(k=>!validYears.has(k)))fail('Некорректные настройки планировщика.');for(const [k,v] of Object.entries(x.plannerPrefs))plannerPrefs[k]=normalizePrefs(v)}
+ if(x.priority!==undefined&&(!Number.isInteger(x.priority)||x.priority<0||x.priority>100))fail('Некорректный приоритет баланса.');
+ const lastCheck=Number.isFinite(x.lastCheck)&&x.lastCheck>=0&&x.lastCheck<Date.now()+86400000?x.lastCheck:0;
+ return {year:x.year,salary:x.salary,salaryMode:x.salaryMode||'net',base:x.base,additional:x.additional,week:x.week,auto:x.auto,autoHolidays:x.autoHolidays===true,hidden,years:allYears,periods,scenarios,lastCheck,priority:x.priority??50,plannerPrefs};
+}
+async function importLocalData(file){
+ if(!file)return;
+ if(file.size>2*1024*1024){storageFeedback('Файл слишком большой (максимум 2 МБ).','err');return}
+ try{
+  const contents=await file.text();const payload=JSON.parse(contents);
+  const imported=validateImportedData(payload);
+  if(!confirm('Импорт заменит текущий оклад, отпуска, сценарии, календари и настройки. Продолжить?')){storageFeedback('Импорт отменён. Текущие данные не изменены.');return}
+  localStorage.setItem(KEY,JSON.stringify(imported));
+  location.reload();
+ }catch(e){storageFeedback('Не удалось импортировать данные: '+e.message,'err')}
+}
+function resetLocalData(){
+ if(!confirm('Сбросить все сохранённые данные? Оклад, отпуска, сценарии и загруженные календари будут удалены. Отменить действие нельзя.'))return;
+ try{
+  [KEY,'vacation-calc-shared','vacation-calc-2026','vacation-calc-2027'].forEach(k=>localStorage.removeItem(k));
+  location.reload();
+ }catch(e){storageFeedback('Не удалось сбросить данные: '+e.message,'err')}
+}
+// Events
+$('year-select').addEventListener('change',e=>changeYear(Number(e.target.value)));
+document.querySelector('.tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t)switchTab(t.dataset.tab)});
+$('salary').addEventListener('input',e=>{state.salary=Number(e.target.value);repaint()});
+document.querySelector('.salary-mode').addEventListener('click',e=>{const b=e.target.closest('[data-salary-mode]');if(!b||b.dataset.salaryMode===state.salaryMode)return;state.salaryMode=b.dataset.salaryMode;renderSalaryMode();persist()});
+$('periods').addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(!b)return;current().splice(Number(b.dataset.remove),1);renderInputs();repaint()});
+$('periods').addEventListener('change',e=>{const x=e.target.closest('[data-prop]');if(!x)return;const i=Number(x.dataset.index),p=current()[i];if(!p)return;const prop=x.dataset.prop;if(prop==='inputMode'){const r=resolvePeriod(p);if(!r.error){let n=0;for(let t=r.s;t<=r.e;t+=D)if(!calendar.holiday(t))n++;p.end=iso(r.e);p.duration=Math.max(1,n)}else p.duration=Number(p.duration)||14;p.inputMode=x.value;p.fixedDates=x.value==='dates'}else if(prop==='locked')p.locked=x.checked;else if(prop==='duration')p.duration=Math.max(1,Math.min(366,Math.floor(Number(x.value)||1)));else p[prop]=x.value;if(p.inputMode==='days'){const r=resolvePeriod(p);p.end=r.error?p.start:iso(r.e)}renderInputs();repaint()});
+$('add').addEventListener('click',()=>{if(current().length>=25)return;current().push({start:`${state.year}-08-02`,end:`${state.year}-08-15`,type:'auto',inputMode:state.autoHolidays?'days':'dates',...(state.autoHolidays?{duration:14}:{fixedDates:true})});renderInputs();repaint()});
+$('calendar').addEventListener('click',e=>{const b=e.target.closest('[data-cal-date]');if(!b)return;const t=stamp(b.dataset.calDate);calSelection=calSelection.length===1?[calSelection[0],t].sort((a,b)=>a-b):[t];drawCalendar(calLastSeen)});
+$('cal-clear').addEventListener('click',()=>{calSelection=[];drawCalendar(calLastSeen)});$('cal-days').addEventListener('change',()=>drawCalendar(calLastSeen));$('cal-add').addEventListener('click',()=>{const p=selectedCalSpan();if(!p||$('cal-add').disabled)return;current().push(p);calSelection=[];renderInputs();repaint()});
+for(const id of ['reco','plan']){const el=$(id+'-priority');el.addEventListener('input',()=>{state.priority=Number(el.value);syncPriority()});el.addEventListener('change',()=>{state.priority=Number(el.value);renderReco();generatePlans(true);persist()})}
+
+$('reco-days').addEventListener('change',renderReco);$('find-reco').addEventListener('click',renderReco);
+document.querySelector('.strategy-bar').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(b){mode=b.dataset.mode;renderReco()}});
+$('recommendations').addEventListener('click',e=>{const b=e.target.closest('[data-reco]');if(!b)return;const item=suggestions[Number(b.dataset.reco)];if(!item)return;if(b.dataset.action==='save'){setScenario('B',[item.span]);switchTab('planner')}else{state.periods[state.year]=[{...item.span}];renderInputs();repaint();document.querySelector('.results-card').scrollIntoView({behavior:'smooth',block:'start'})}});
+document.querySelectorAll('[data-save-scenario]').forEach(b=>b.addEventListener('click',()=>{setScenario(b.dataset.saveScenario,current());switchTab('planner')}));
+$('clear-scenarios').addEventListener('click',()=>{state.scenarios[state.year]={};persist();renderCompare()});
+$('compare-grid').addEventListener('click',e=>{const x=e.target.closest('[data-load-scenario]');if(!x)return;const p=state.scenarios[state.year]?.[x.dataset.loadScenario];if(!Array.isArray(p))return;state.periods[state.year]=p.map(s=>({...s}));renderInputs();repaint();switchTab('calculator')});
+$('plan-generate').addEventListener('click',()=>generatePlans());
+for(const [id,key] of [['plan-count','count'],['plan-gap','gap'],['plan-min14','min14']])$(id).addEventListener('change',e=>{prefs()[key]=key==='min14'?e.target.checked:key==='gap'?Math.max(0,Math.min(365,Math.floor(Number(e.target.value)||0))):Number(e.target.value);renderPlannerControls();generatePlans();persist()});
+$('plan-months').addEventListener('change',e=>{const t=e.target.closest('[data-plan-month]');if(!t)return;prefs().months[Number(t.dataset.planMonth)]=t.value;generatePlans();persist()});
+$('annual-plans').addEventListener('click',e=>{const b=e.target.closest('[data-plan],[data-plan-save]');if(!b)return;const i=Number(b.dataset.plan??b.dataset.planSave),p=annualPlans[i];if(!p)return;if(b.dataset.planSave!==undefined){setScenario('B',p.spans)}else{state.periods[state.year]=p.spans.map(x=>({...x}));renderInputs();repaint();switchTab('calculator')}});
+for(const [id,key] of [['leave-base','base'],['leave-additional','additional']])$(id).addEventListener('change',e=>{let n=Number(e.target.value);state[key]=Math.max(0,Math.min(365,Number.isFinite(n)?Math.floor(n):0));repaint()});
+document.querySelectorAll('[data-week]').forEach(b=>b.addEventListener('click',()=>{state.week=Number(b.dataset.week);loadCalendar();repaint()}));
+$('year-tiles').addEventListener('click',e=>{const b=e.target.closest('[data-toggle-year]');if(!b)return;const y=Number(b.dataset.toggleYear);if(y===state.year&& !state.hidden.includes(y)){setFeedback('Нельзя скрыть выбранный год. Сначала переключись на другой.','err');return}if(state.hidden.includes(y))state.hidden=state.hidden.filter(x=>x!==y);else state.hidden.push(y);renderYearSelect();renderSettings();persist()});
+$('auto-check').addEventListener('change',e=>{state.auto=e.target.checked;persist()});
+$('holiday-auto-extend').addEventListener('change',e=>{state.autoHolidays=e.target.checked;renderInputs();repaint()});
+$('check-updates').addEventListener('click',()=>checkUpdates(true));
+$('export-data').addEventListener('click',exportLocalData);
+$('import-data').addEventListener('click',()=>$('import-file').click());
+$('import-file').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';await importLocalData(file)});
+$('reset-data').addEventListener('click',resetLocalData);
+$('load-year-btn').addEventListener('click',async()=>{const y=Number($('load-year').value);$('load-year-btn').disabled=true;setFeedback(`Загружаем календарь ${y}…`);try{await retrieveYear(y)}catch(e){setFeedback(e.message,'err')}finally{$('load-year-btn').disabled=false}});
+loadCalendar();renderYearSelect();renderInputs();renderAll();persist();
+if(state.auto&&Date.now()-(Number(state.lastCheck)||0)>7*86400000){setTimeout(()=>checkUpdates(false),1200)}
+})();</script>
+<script>
+/* Optional cross-origin iframe sizing. No user data is sent. */
+(()=>{'use strict';
+ if(window.parent===window)return;
+ document.documentElement.classList.add('vacation-embedded');
+ const content=document.querySelector('.container');
+ if(!content)return;
+ let parentOrigin=null,lastHeight=0,scheduled=false;
+ function sendHeight(){
+   scheduled=false;
+   if(!parentOrigin)return;
+   const height=Math.ceil(content.getBoundingClientRect().height);
+   if(height<=0||height===lastHeight)return;
+   lastHeight=height;
+   window.parent.postMessage({type:'vacation-resize',height},parentOrigin);
+ }
+ function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(sendHeight)}}
+ window.addEventListener('message',event=>{
+   if(event.source!==window.parent||event.data?.type!=='vacation-resize-request')return;
+   if(!/^https?:\/\//.test(event.origin))return;
+   parentOrigin=event.origin;lastHeight=0;schedule();
+ });
+ if(typeof ResizeObserver==='function')new ResizeObserver(schedule).observe(content);
+ else new MutationObserver(schedule).observe(content,{subtree:true,childList:true,attributes:true,characterData:true});
+ window.addEventListener('resize',schedule);
+ window.addEventListener('load',schedule);
+ if(document.fonts)document.fonts.ready.then(schedule);
+})();
+</script>
+</body></html>
