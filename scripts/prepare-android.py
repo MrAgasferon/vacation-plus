@@ -21,6 +21,18 @@ def adjust_keyboard(match):
     return (tag[:-2].rstrip() + ' android:windowSoftInputMode="adjustResize"/>') if tag.endswith('/>') else (tag[:-1] + ' android:windowSoftInputMode="adjustResize">')
 text, count = re.subn(r'<activity\b[^>]*>', adjust_keyboard, text, count=1)
 assert count == 1, 'Unexpected activity template'
+# Reference unique resource names, not the Capacitor template launcher.
+def configure_application(match):
+    tag = match.group(0)
+    for name,value in {'icon':'@mipmap/vacation_launcher','roundIcon':'@mipmap/vacation_launcher_round'}.items():
+        pattern = rf'android:{name}="[^"]*"'
+        if re.search(pattern,tag):
+            tag = re.sub(pattern,f'android:{name}="{value}"',tag)
+        else:
+            tag = tag[:-1] + f' android:{name}="{value}">'
+    return tag
+text, count = re.subn(r'<application\b[^>]*>', configure_application, text, count=1)
+assert count == 1
 ET.fromstring(text)
 manifest.write_text(text, encoding='utf-8')
 
@@ -30,10 +42,10 @@ build = app / 'build.gradle'
 text = build.read_text(encoding='utf-8')
 text, c = re.subn(r'(?m)^(\s*versionCode\s+)\d+\s*$', rf'\g<1>{version}', text)
 assert c == 1, 'Unexpected versionCode template'
-text, c = re.subn(r'(?m)^(\s*versionName\s+)["\'][^"\']+["\']\s*$', rf'\g<1>"0.2.0-preview.{version}"', text)
+text, c = re.subn(r'(?m)^(\s*versionName\s+)["\'][^"\']+["\']\s*$', rf'\g<1>"0.2.1-preview.{version}"', text)
 assert c == 1, 'Unexpected versionName template'
 build.write_text(text, encoding='utf-8')
-print(f'Android preview version 0.2.0-preview.{version}; standard backup disabled')
+print(f'Android preview version 0.2.1-preview.{version}; standard backup disabled')
 
 # Native Java source is versioned; the rest of Android stays generated in CI.
 from shutil import copyfile
@@ -49,16 +61,16 @@ mask = Image.open(root / 'www/assets/icon-maskable-512.png').convert('RGBA')
 for density, size in {'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}.items():
     folder = res / ('mipmap-' + density)
     folder.mkdir(exist_ok=True)
-    for name in ('ic_launcher','ic_launcher_round'):
+    for name in ('vacation_launcher','vacation_launcher_round'):
         icon.resize((size,size),Image.Resampling.LANCZOS).save(folder / (name+'.png'))
-    mask.resize((int(size*2.25),int(size*2.25)),Image.Resampling.LANCZOS).save(folder/'ic_launcher_foreground.png')
+    mask.resize((int(size*2.25),int(size*2.25)),Image.Resampling.LANCZOS).save(folder/'vacation_launcher_foreground.png')
 # Explicit adaptive launcher resources, no template foreground left over.
 anydpi = res / 'mipmap-anydpi-v26'; anydpi.mkdir(exist_ok=True)
-for name in ('ic_launcher','ic_launcher_round'):
+for name in ('vacation_launcher','vacation_launcher_round'):
     (anydpi / (name+'.xml')).write_text('''<?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/vacation_background" />
-    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <foreground android:drawable="@mipmap/vacation_launcher_foreground" />
 </adaptive-icon>''',encoding='utf-8')
 (res/'values/vacation_colors.xml').write_text('<resources><color name="vacation_background">#0B1020</color></resources>',encoding='utf-8')
 # Reuse the native Android 12+ splash theme from Capacitor (AndroidX backport for older OS).

@@ -605,9 +605,26 @@ if(native){
  const note=$('native-info');note.hidden=false;note.textContent='Android · '+native.version+' · локальное хранилище Preferences';
  $('native-storage-note').hidden=false;
  const panel=$('local-data-title').closest('section');panel.querySelector('p.info-line:not([id])').textContent='Оклад, отпуска, сценарии, настройки и календари сохраняются локально на устройстве. Резервный JSON можно перенести в веб-версию.';panel.querySelector('p.storage-footnote').textContent='Экспорт сохраняет JSON в выбранное место. Импорт заменяет данные после подтверждения. Файл не отправляется автоматически.';
- native.app.addListener('backButton',async()=>{if(fileBusy||replacing)return;if(document.querySelector('.tab.active')?.dataset.tab!=='calculator'){switchTab('calculator');window.scrollTo(0,0);return}if(document.activeElement?.matches('input,textarea,select')){document.activeElement.blur();return}try{await native.flush();await native.app.exitApp()}catch(e){native.warn('Сохранение не завершено: '+e.message)}}).catch(e=>native.warn('Не удалось настроить кнопку Назад: '+e.message));
+ document.addEventListener('vacation-native-back',createVacationBackHandler({
+  busy:()=>fileBusy||replacing,activeTab:()=>document.querySelector('.tab.active')?.dataset.tab,
+  showCalculator:()=>{switchTab('calculator');window.scrollTo(0,0)},
+  blurInput:()=>{const el=document.activeElement;if(el?.matches('input,textarea,select')){el.blur();return true}return false},
+  flush:()=>native.flush(),exit:()=>native.app.exitApp(),warn:msg=>native.warn(msg)
+ }));
 }
 }
+// NATIVE_BACK_START
+function createVacationBackHandler(ui){
+ let exiting=false;
+ return async()=>{
+  if(exiting||ui.busy())return;
+  if(ui.activeTab()!=='calculator'){ui.showCalculator();return}
+  if(ui.blurInput())return;
+  exiting=true;
+  try{await ui.flush();await ui.exit()}catch(e){ui.warn('Не удалось завершить выход: '+e.message)}finally{exiting=false}
+ };
+}
+// NATIVE_BACK_END
 // NATIVE_ADAPTER_START
 async function createVacationNative(plugins,local,warn){
  const key='vacation-plus-v2',legacy=[key,'vacation-calc-shared','vacation-calc-2026','vacation-calc-2027'];
