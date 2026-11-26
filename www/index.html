@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c1222"><title>Отпуск × деньги — 2027</title><style>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c1222"><title>Отпуск × деньги — 2027</title><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./assets/icon-192.png" type="image/png"><link rel="apple-touch-icon" href="./assets/icon-192.png"><style>
 :root{--bg:#0b1020;--card:#141c30;--card2:#19243b;--border:#2b3750;--muted:#9aaac5;--text:#f3f7ff;--accent:#8ea4ff;--good:#64ddb5;--bad:#ff969d;--gold:#ffc883;--ring:#344665}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);background:radial-gradient(ellipse at 5% 0%,#202e55 0%,transparent 32%),radial-gradient(ellipse at 96% 4%,#183944 0%,transparent 29%),var(--bg);font:15px/1.5 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}
 button,input,select{font:inherit}button{cursor:pointer}a{color:#acbaff;text-decoration:underline;text-underline-offset:3px}a:hover{color:#d1d9ff}
@@ -617,5 +617,15 @@ if(state.auto&&Date.now()-(Number(state.lastCheck)||0)>7*86400000){setTimeout(()
  window.addEventListener('load',schedule);
  if(document.fonts)document.fonts.ready.then(schedule);
 })();
+</script>
+<script>
+// PWA: keep the calculator usable if service workers are unavailable.
+if (window.self === window.top && 'serviceWorker' in navigator &&
+    !window.Capacitor?.isNativePlatform?.() && window.isSecureContext) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(error =>
+      console.warn('Offline cache unavailable:', error));
+  }, {once:true});
+}
 </script>
 </body></html>
