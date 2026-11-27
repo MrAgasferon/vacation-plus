@@ -33,9 +33,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
+      - name: Stamp deployed web revision
+        run: |
+          cp -a www "$RUNNER_TEMP/vacation-site"
+          python3 scripts/stamp-web.py "$(git rev-parse HEAD:www)" "$RUNNER_TEMP/vacation-site/index.html"
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: www
+          path: ${{ runner.temp }}/vacation-site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
