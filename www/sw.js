@@ -1,6 +1,6 @@
 // Only public, same-origin application files are cached; never API responses or user backups.
 const PREFIX = 'vacation-plus-shell-' + self.registration.scope + '-';
-const CACHE = PREFIX + 'v1';
+const CACHE = PREFIX + 'v2';
 const root = new URL(self.registration.scope);
 const index = new URL('index.html', root).href;
 const assets = ['manifest.webmanifest', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/icon-maskable-512.png'].map(p => new URL(p, root).href);

@@ -29,29 +29,25 @@
  }
  if(typeof module==='object'&&module.exports){module.exports={versionCode,evaluateRelease,checkRelease};return}
  if(!root.Capacitor?.isNativePlatform?.())return;
- const panel=document.createElement('section'); panel.className='panel local-data-panel';
- panel.innerHTML='<h2>Обновление приложения</h2><p class="info-line" id="apk-version">Проверяем версию…</p><div class="local-data-actions"><button type="button" class="btn btn-primary" id="apk-check">Проверить обновление APK</button><button type="button" class="btn" id="apk-open" hidden style="display:none">Открыть релиз</button></div><p id="apk-status" class="feedback" role="status" aria-live="polite">Проверка требует интернета. Калькулятор работает и без него.</p><p class="info-line">APK загружается с GitHub Releases. Установка подтверждается в Android. Перед обновлением рекомендуется сохранить резервный JSON.</p>';
- const grid=document.querySelector('#tab-settings .settings-grid'); if(!grid)return; grid.append(panel);
+ const panel=document.getElementById('app-distribution'), section=document.getElementById('apk-update-options');
+ if(!panel||!section)return;
+ panel.hidden=false;section.hidden=false;
+ section.innerHTML='<p class="info-line" id="apk-version">Подписанная версия Android</p><div class="app-actions"><button type="button" class="btn btn-primary" id="apk-check">Проверить обновления</button><button type="button" class="btn" id="apk-open" hidden>Открыть релизы</button></div><p id="apk-status" class="feedback" role="status" aria-live="polite">Проверка выполняется только вручную и требует интернета.</p>';
  const byId=id=>document.getElementById(id), status=byId('apk-status'), btn=byId('apk-check'), open=byId('apk-open');
- const banner=document.createElement('section');banner.className='note';banner.style.margin='0 0 16px';banner.hidden=true;
- banner.innerHTML='<div class="row-between"><strong id="apk-banner-text"></strong><div class="slot-compare"><button type="button" id="apk-banner-open" class="btn btn-primary">Открыть релиз</button><button type="button" id="apk-banner-dismiss" class="btn">Позже</button></div></div>';
- const nav=document.querySelector('.tabs');if(nav)nav.before(banner);
- let info=null, current=null, busy=false;
+ let info=null,current=null,busy=false;
  function message(text,kind=''){status.textContent=text;status.className='feedback '+kind}
- function showOpen(result){current=result;open.hidden=!result;open.style.display=result?'':'none';banner.hidden=!result;if(result&&nav)byId('apk-banner-text').textContent='Доступно обновление '+result.version;}
- async function check(manual){
+ function showOpen(result){current=result;open.hidden=!result;}
+ // Local version only; never request GitHub on startup.
+ async function readInfo(){info=await root.Capacitor.Plugins.App.getInfo();byId('apk-version').textContent='Установлена '+info.version+' ('+info.build+')';return info;}
+ readInfo().catch(()=>{});
+ async function check(){
   if(busy)return;busy=true;btn.disabled=true;showOpen(null);message('Проверяем GitHub…');
-  try{if(!info)info=await root.Capacitor.Plugins.App.getInfo(); byId('apk-version').textContent='Установлена '+info.version+' ('+info.build+')';
-   const result=await checkRelease(info,root.fetch.bind(root));
+  try{const result=await checkRelease(info||await readInfo(),root.fetch.bind(root));
    if(result.available){showOpen(result);message('Доступна версия '+result.version+'.','ok')}
    else message('Установлена актуальная версия.','ok');
-  }catch(e){message(manual?'Не удалось проверить обновление. '+(e.name==='AbortError'?'Время ожидания истекло.':e.message):'Автоматическая проверка недоступна. Можно повторить вручную.','err')}
+  }catch(e){message('Не удалось проверить обновление. '+(e.name==='AbortError'?'Время ожидания истекло.':e.message),'err')}
   finally{busy=false;btn.disabled=false}
  }
- btn.addEventListener('click',()=>check(true));
- async function openRelease(){if(!current)return;try{await root.Capacitor.Plugins.VacationUpdates.openRelease({tag:current.tag})}catch(e){message('Не удалось открыть релиз: '+e.message,'err');if(nav)byId('apk-banner-text').textContent='Не удалось открыть релиз. Повтори попытку.';}}
- open.addEventListener('click',openRelease);
- if(nav){byId('apk-banner-open').addEventListener('click',openRelease);byId('apk-banner-dismiss').addEventListener('click',()=>{banner.hidden=true});}
- // A single delayed request per cold start; never awaited by calculator initialization.
- setTimeout(()=>check(false),2500);
+ btn.addEventListener('click',check);
+ open.addEventListener('click',async()=>{if(!current)return;try{await root.Capacitor.Plugins.VacationUpdates.openRelease({tag:current.tag})}catch(e){message('Не удалось открыть релиз: '+e.message,'err')}});
 })(globalThis);
